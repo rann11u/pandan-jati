@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daftar - Pandan Jati</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --blue-50: #EFF6FF;
+            --blue-100: #DBEAFE;
+            --blue-200: #BFDBFE;
+            --blue-400: #60A5FA;
+            --blue-500: #3B82F6;
+            --blue-600: #2563EB;
+            --blue-700: #1D4ED8;
+            --blue-800: #1E40AF;
+            --blue-900: #1E3A8A;
+            --card-bg: #FFFFFF;
+            --card-border: #E2E8F0;
+            --page-bg: #F1F5F9;
+            --text-primary: #0F172A;
+            --text-secondary: #64748B;
+            --text-muted: #94A3B8;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.04);
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.08), 0 2px 4px rgba(0,0,0,0.04);
+            --shadow-lg: 0 10px 30px rgba(0,0,0,0.1), 0 4px 8px rgba(0,0,0,0.06);
+            --radius-sm: 8px;
+            --radius-md: 10px;
+            --radius-lg: 14px;
+            --radius-xl: 18px;
+            --green-600: #16A34A;
+            --red-500: #EF4444;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: var(--page-bg);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            background-image: radial-gradient(circle at 80% 70%, var(--blue-50) 0%, transparent 50%);
+        }
+
+        .auth-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-lg);
+            width: 100%;
+            max-width: 450px;
+            padding: 2.5rem 2rem;
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .auth-logo {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .logo-icon {
+            width: 48px; height: 48px;
+            background: var(--blue-600);
+            border-radius: 12px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            color: #fff;
+            margin-bottom: 0.75rem;
+        }
+
+        .auth-title {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--text-primary);
+        }
+
+        .auth-sub {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-top: 0.25rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.25rem;
+            position: relative;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 0.4rem;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        .input-icon {
+            position: relative;
+        }
+
+        .input-icon i {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 10px 14px 10px 40px;
+            border: 1px solid var(--card-border);
+            border-radius: var(--radius-sm);
+            font-size: 0.9rem;
+            font-family: inherit;
+            color: var(--text-primary);
+            background: var(--card-bg);
+            transition: all 0.15s;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--blue-400);
+            box-shadow: 0 0 0 3px rgba(59,130,246,0.1);
+        }
+
+        .form-control::placeholder {
+            color: var(--text-muted);
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 10px 18px;
+            border-radius: var(--radius-sm);
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: all 0.15s;
+            font-family: inherit;
+            width: 100%;
+        }
+
+        .btn-primary {
+            background: var(--blue-600);
+            color: #fff;
+        }
+
+        .btn-primary:hover {
+            background: var(--blue-700);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(37,99,235,0.3);
+        }
+
+        .auth-footer {
+            text-align: center;
+            margin-top: 1.5rem;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .auth-footer a {
+            color: var(--blue-600);
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .auth-footer a:hover {
+            text-decoration: underline;
+        }
+
+        .alert {
+            background: #FEF2F2;
+            border: 1px solid #FECACA;
+            color: var(--red-500);
+            padding: 10px 14px;
+            border-radius: var(--radius-sm);
+            font-size: 0.8rem;
+            margin-bottom: 1rem;
+            display: none;
+        }
+
+        .alert.show {
+            display: block;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        @media (max-width: 500px) {
+            .form-row { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="auth-card">
+        <div class="auth-logo">
+            <div class="logo-icon"><i class="fas fa-user-plus"></i></div>
+            <div class="auth-title">Daftar Akun Baru</div>
+            <div class="auth-sub">Pandan Jati - Bahan Bangunan</div>
+        </div>
+
+        <div id="alertBox" class="alert">
+            <i class="fas fa-exclamation-circle"></i> <span id="alertMsg">Mohon isi semua kolom.</span>
+        </div>
+
+        <form id="registerForm">
+            <div class="form-group">
+                <label class="form-label">Nama Lengkap</label>
+                <div class="input-icon">
+                    <i class="fas fa-user"></i>
+                    <input type="text" class="form-control" id="fullName" placeholder="Nama Anda" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Email</label>
+                <div class="input-icon">
+                    <i class="fas fa-envelope"></i>
+                    <input type="email" class="form-control" id="email" placeholder="contoh@email.com" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Username</label>
+                <div class="input-icon">
+                    <i class="fas fa-at"></i>
+                    <input type="text" class="form-control" id="username" placeholder="Buat username" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Password</label>
+                <div class="input-icon">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" class="form-control" id="password" placeholder="Minimal 6 karakter" required minlength="6">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Konfirmasi Password</label>
+                <div class="input-icon">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" class="form-control" id="confirmPassword" placeholder="Ulangi password" required minlength="6">
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary" style="width:100%">
+                <i class="fas fa-user-check"></i> Daftar
+            </button>
+        </form>
+
+        <div class="auth-footer">
+            Sudah punya akun? <a href="login.html">Masuk</a>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('registerForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const fullName = document.getElementById('fullName').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            const alertBox = document.getElementById('alertBox');
+            const alertMsg = document.getElementById('alertMsg');
+
+            if (!fullName || !email || !username || !password || !confirmPassword) {
+                alertMsg.textContent = 'Mohon lengkapi semua kolom.';
+                alertBox.classList.add('show');
+                return;
+            }
+            if (password !== confirmPassword) {
+                alertMsg.textContent = 'Password dan konfirmasi tidak cocok.';
+                alertBox.classList.add('show');
+                return;
+            }
+
+            const users = JSON.parse(localStorage.getItem('users')) || [];
+            if (users.find(u => u.username === username || u.email === email)) {
+                alertMsg.textContent = 'Username atau email sudah terdaftar.';
+                alertBox.classList.add('show');
+                return;
+            }
+
+            const newUser = { fullName, email, username, password };
+            users.push(newUser);
+            localStorage.setItem('users', JSON.stringify(users));
+
+            // Auto login
+            localStorage.setItem('currentUser', JSON.stringify({
+                fullName, email, username, role: 'customer'
+            }));
+
+            window.location.href = 'index.html';
+        });
+    </script>
+</body>
+</html>
+

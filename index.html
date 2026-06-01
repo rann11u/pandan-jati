@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Katalog Produk - Pandan Jati</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* ===== CSS SAMA SEPERTI SEBELUMNYA (variables, navbar, grid, dll) ===== */
+        :root {
+            --blue-50: #EFF6FF; --blue-100: #DBEAFE; --blue-200: #BFDBFE; --blue-400: #60A5FA;
+            --blue-500: #3B82F6; --blue-600: #2563EB; --blue-700: #1D4ED8; --blue-800: #1E40AF;
+            --blue-900: #1E3A8A; --sidebar-bg: #0F172A; --card-bg: #FFFFFF; --card-border: #E2E8F0;
+            --page-bg: #F1F5F9; --text-primary: #0F172A; --text-secondary: #64748B;
+            --text-muted: #94A3B8; --shadow-sm: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.04);
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.08), 0 2px 4px rgba(0,0,0,0.04);
+            --shadow-hover: 0 10px 30px rgba(0,0,0,0.1), 0 4px 8px rgba(0,0,0,0.06);
+            --radius-sm: 8px; --radius-md: 10px; --radius-lg: 14px; --radius-xl: 18px;
+            --green-50: #F0FDF4; --green-600: #16A34A; --amber-50: #FFFBEB;
+            --amber-500: #F59E0B; --red-50: #FEF2F2; --red-500: #EF4444; --purple-50: #FAF5FF;
+            --purple-600: #7C3AED;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--page-bg); color: var(--text-primary); }
+
+        .navbar { background: var(--card-bg); border-bottom: 1px solid var(--card-border); box-shadow: var(--shadow-sm); padding: 0 28px; height: 58px; position: sticky; top: 0; z-index: 100; display: flex; align-items: center; }
+        .nav-container { max-width: 1400px; width: 100%; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+        .logo h1 { font-size: 16px; font-weight: 800; color: var(--text-primary); display: flex; align-items: center; gap: 8px; }
+        .logo span { background: var(--blue-600); color: white; font-size: 10px; font-weight: 600; padding: 2px 10px; border-radius: 20px; letter-spacing: 0.05em; }
+        .nav-actions { display: flex; align-items: center; gap: 10px; }
+        .user-greeting { font-size: 13px; font-weight: 600; color: var(--text-primary); }
+        .btn { display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px; border-radius: var(--radius-sm); font-size: 13px; font-weight: 600; cursor: pointer; border: none; transition: all 0.15s; font-family: inherit; text-decoration: none; white-space: nowrap; }
+        .btn-primary { background: var(--blue-600); color: #fff; }
+        .btn-primary:hover { background: var(--blue-700); transform: translateY(-1px); }
+        .btn-outline { background: transparent; border: 1px solid var(--card-border); color: var(--text-secondary); }
+        .btn-outline:hover { background: var(--page-bg); color: var(--text-primary); }
+        .btn-wa { background: #25D366; color: #fff; box-shadow: 0 2px 8px rgba(37,211,102,0.25); }
+        .btn-wa:hover { background: #128C7E; transform: translateY(-1px); }
+        .btn-sm { padding: 5px 10px; font-size: 12px; }
+
+        .hero { background: linear-gradient(135deg, var(--blue-50) 0%, #ffffff 100%); padding: 3rem 2rem; text-align: center; border-bottom: 1px solid var(--blue-200); }
+        .hero h2 { font-size: 2rem; font-weight: 800; color: var(--blue-900); }
+        .hero p { font-size: 1rem; max-width: 700px; margin: 0.75rem auto 0; color: var(--text-secondary); }
+
+        .katalog-controls { max-width: 1400px; margin: 2rem auto 0; padding: 0 1.5rem; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 1rem; }
+        .search-box { display: flex; align-items: center; background: var(--card-bg); border: 1px solid var(--card-border); border-radius: var(--radius-sm); padding: 0 12px; box-shadow: var(--shadow-sm); flex: 1; max-width: 350px; transition: border-color 0.15s; }
+        .search-box:focus-within { border-color: var(--blue-400); box-shadow: 0 0 0 3px rgba(59,130,246,0.1); }
+        .search-box i { color: var(--text-muted); font-size: 1rem; margin-right: 8px; }
+        .search-box input { border: none; padding: 0.7rem 0; font-size: 0.9rem; width: 100%; font-family: inherit; outline: none; background: transparent; color: var(--text-primary); }
+        .search-box input::placeholder { color: var(--text-muted); }
+        .filter-buttons { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+        .filter-chip { background: var(--card-bg); border: 1px solid var(--card-border); padding: 6px 14px; border-radius: var(--radius-sm); font-weight: 600; font-size: 0.85rem; cursor: pointer; transition: all 0.15s; color: var(--text-secondary); font-family: inherit; }
+        .filter-chip.active, .filter-chip:hover { background: var(--blue-600); color: white; border-color: var(--blue-600); }
+
+        .product-grid { max-width: 1400px; margin: 2rem auto; padding: 0 1.5rem; display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 1.5rem; }
+        .product-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-sm); transition: all 0.2s ease; display: flex; flex-direction: column; height: 100%; }
+        .product-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
+        .product-img { background: var(--blue-50); height: 180px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+        .product-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+        .product-info { padding: 1.5rem; flex: 1; display: flex; flex-direction: column; }
+        .product-category { font-size: 0.7rem; text-transform: uppercase; font-weight: 700; color: var(--blue-700); background: var(--blue-50); display: inline-block; padding: 3px 10px; border-radius: 20px; margin-bottom: 0.75rem; align-self: flex-start; letter-spacing: 0.04em; }
+        .product-title { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.35rem; color: var(--text-primary); }
+        .product-price { font-size: 1.6rem; font-weight: 800; color: var(--blue-700); margin: 0.5rem 0; }
+        .product-desc { color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 1.2rem; line-height: 1.5; flex-grow: 1; }
+        .btn-wa-product { background: #25D366; color: white; border: none; padding: 0.7rem 1rem; border-radius: 50px; font-weight: 700; font-family: inherit; font-size: 0.95rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; transition: all 0.15s; width: 100%; margin-top: auto; text-decoration: none; box-shadow: 0 2px 8px rgba(37,211,102,0.2); }
+        .btn-wa-product:hover { background: #128C7E; transform: translateY(-1px); }
+
+        .footer { background: var(--sidebar-bg); color: rgba(255,255,255,0.5); text-align: center; padding: 2rem; margin-top: 3rem; font-size: 0.8rem; border-top: 1px solid rgba(255,255,255,0.06); }
+        .empty-state { text-align: center; grid-column: 1 / -1; padding: 3rem 2rem; background: var(--card-bg); border: 1px solid var(--card-border); border-radius: var(--radius-lg); color: var(--text-muted); font-size: 0.95rem; }
+
+        @media (max-width: 768px) {
+            .hero h2 { font-size: 1.6rem; }
+            .navbar { padding: 0 16px; }
+            .logo h1 { font-size: 1.2rem; }
+            .product-grid { gap: 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="nav-container">
+        <div class="logo">
+            <h1><i class="fas fa-store"></i> Pandan Jati <span>Bahan Bangunan</span></h1>
+        </div>
+        <div class="nav-actions" id="userActions"></div>
+    </div>
+</nav>
+
+<section class="hero">
+    <h2>Katalog Produk Terlengkap</h2>
+    <p>Keramik, Cat, Kran, Ember — Harga bersaing, kualitas terjamin.</p>
+    <p style="font-size: 0.9rem;"><i class="fas fa-truck"></i> Tersedia armada pengiriman sendiri | <i class="fas fa-check-circle"></i> Langsung dari supplier terpercaya</p>
+</section>
+
+<div class="katalog-controls">
+    <div class="search-box">
+        <i class="fas fa-search"></i>
+        <input type="text" id="searchInput" placeholder="Cari produk...">
+    </div>
+    <div class="filter-buttons" id="filterContainer">
+        <button class="filter-chip active" data-cat="all">Semua</button>
+        <button class="filter-chip" data-cat="Keramik">Keramik</button>
+        <button class="filter-chip" data-cat="Cat">Cat</button>
+        <button class="filter-chip" data-cat="Kran">Kran</button>
+        <button class="filter-chip" data-cat="Ember">Ember</button>
+    </div>
+</div>
+
+<div id="productGrid" class="product-grid">
+    <div class="empty-state">Memuat produk...</div>
+</div>
+
+<footer class="footer">
+    <p>© 2025 Toko Keramik Pandan Jati - Jl. Raya Pandan Jati No. 88, Semarang | Harga dapat berubah sewaktu-waktu</p>
+    <p><i class="fab fa-whatsapp"></i> Hubungi kami untuk info stok & harga terbaru</p>
+</footer>
+
+<script>
+    // ========== DATA PRODUK (tetap) ==========
+    const defaultProducts = [
+        { id: 1, name: "Keramik Putih 40x40", category: "Keramik", price: 95000, unit: "Dus", description: "Glossy, motif polos, cocok untuk ruang tamu.", image: "/img/keramik1.jpg" },
+        { id: 2, name: "Keramik Hitam 30x30", category: "Keramik", price: 82000, unit: "Dus", description: "Matte, anti licin, untuk area basah.", image: "/img/keramik2.jpg" },
+        { id: 3, name: "Keramik Kayu 15x80", category: "Keramik", price: 128000, unit: "Dus", description: "Motif kayu natural, ukuran lempeng panjang.", image: "/img/keramik3.jpg" },
+        { id: 4, name: "Keramik Besar 60x60", category: "Keramik", price: 165000, unit: "Dus", description: "Ukuran besar, glossy premium, cocok untuk ruang tamu luas.", image: "/img/keramik4.jpg" },
+        { id: 5, name: "Keramik Motif Marmer 50x50", category: "Keramik", price: 145000, unit: "Dus", description: "Motif marmer elegan, kesan mewah.", image: "/img/keramik5.jpg" },
+        { id: 6, name: "Keramik Dinding 25x40", category: "Keramik", price: 75000, unit: "Dus", description: "Motif minimalis, untuk dinding kamar mandi & dapur.", image: "/img/keramik6.jpg" },
+        { id: 7, name: "Keramik Lantai Garasi 40x40", category: "Keramik", price: 88000, unit: "Dus", description: "Tekstur kasar, anti slip, kuat beban berat.", image: "/img/keramik7.jpg" },
+        { id: 8, name: "Keramik Kamar Mandi 30x30", category: "Keramik", price: 78000, unit: "Dus", description: "Motif batu alam, tahan air, mudah dibersihkan.", image: "/img/keramik8.jpg" },
+        { id: 9, name: "Cat Tembok 5kg", category: "Cat", price: 155000, unit: "Pail", description: "Cat interior premium, anti jamur, warna cerah.", image: "/img/cat1.jpg" },
+        { id: 10, name: "Cat Kayu 1L", category: "Cat", price: 105000, unit: "Kaleng", description: "Glossy, tahan cuaca, cocok untuk pintu & jendela.", image: "/img/cat2.jpg" },
+        { id: 11, name: "Cat Anti Bocor 1kg", category: "Cat", price: 85000, unit: "Kaleng", description: "Melapisi retak rambut, atap & talang air.", image: "/img/cat3.jpg" },
+        { id: 12, name: "Kran Air Tembok", category: "Kran", price: 88000, unit: "Unit", description: "Kuningan, anti karat, model klasik.", image: "/img/kran1.jpg" },
+        { id: 13, name: "Kran Wastafel", category: "Kran", price: 120000, unit: "Unit", description: "Model tinggi, putar 360°, finishing chrome.", image: "/img/kran2.jpg" },
+        { id: 14, name: "Ember Cor 20L", category: "Ember", price: 45000, unit: "Buah", description: "Plastik tebal, kuat, untuk adukan semen.", image: "/img/ember1.jpg" },
+        { id: 15, name: "Ember Serbaguna 10L", category: "Ember", price: 25000, unit: "Buah", description: "Ringan, bertutup, bisa untuk menyimpan air.", image: "/img/ember2.jpg" },
+        { id: 16, name: "Ember Stainless 15L", category: "Ember", price: 95000, unit: "Buah", description: "Anti karat, higienis, untuk kamar mandi.", image: "/img/ember3.jpg" }
+    ];
+
+    let productsCatalog = JSON.parse(localStorage.getItem('products')) || defaultProducts;
+    if (!localStorage.getItem('products')) {
+        localStorage.setItem('products', JSON.stringify(defaultProducts));
+    }
+
+    // ========== USER SESSION ==========
+    const currentUser = JSON.parse(localStorage.getItem('currentUser')) || null;
+
+    function renderUserActions() {
+        const container = document.getElementById('userActions');
+        if (!container) return;
+        if (currentUser) {
+            // Hanya customer (admin tidak akan berada di halaman ini)
+            container.innerHTML = `
+                <span class="user-greeting">Halo, <strong>${currentUser.fullName || currentUser.username}</strong></span>
+                <button class="btn btn-outline btn-sm" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Keluar</button>
+            `;
+        } else {
+            container.innerHTML = `
+                <a href="login.html" class="btn btn-outline btn-sm"><i class="fas fa-sign-in-alt"></i> Masuk</a>
+                <a href="register.html" class="btn btn-primary btn-sm"><i class="fas fa-user-plus"></i> Daftar</a>
+            `;
+        }
+    }
+
+    function logout() {
+        localStorage.removeItem('currentUser');
+        window.location.reload();
+    }
+
+    // ========== RENDER KATALOG ==========
+    const productGrid = document.getElementById('productGrid');
+    const searchInput = document.getElementById('searchInput');
+    let activeCategory = "all";
+
+    function renderCatalog() {
+        const searchTerm = searchInput.value.toLowerCase().trim();
+        let filtered = productsCatalog.filter(product => {
+            const matchCategory = activeCategory === "all" || product.category === activeCategory;
+            const matchSearch = product.name.toLowerCase().includes(searchTerm) || product.category.toLowerCase().includes(searchTerm);
+            return matchCategory && matchSearch;
+        });
+
+        if (filtered.length === 0) {
+            productGrid.innerHTML = `<div class="empty-state"><i class="fas fa-box-open fa-3x" style="color:#94a3b8;"></i><h3 style="margin-top:1rem">Produk tidak ditemukan</h3><p>Coba kata kunci lain atau lihat kategori lain.</p></div>`;
+            return;
+        }
+
+        productGrid.innerHTML = filtered.map(product => {
+            const formattedPrice = new Intl.NumberFormat('id-ID').format(product.price);
+            const waMessage = `Halo Toko Pandan Jati,%0ASaya tertarik dengan produk *${product.name}* (${product.category}).%0A%0A- Harga terbaru: Rp ${formattedPrice} / ${product.unit}?%0A- Apakah tersedia stok?%0A- Estimasi pengiriman ke area saya?%0A%0ATerima kasih.`;
+            const waLink = `https://wa.me/628123456789?text=${waMessage}`;
+
+            return `
+                <div class="product-card">
+                    <div class="product-img">
+                        <img src="${product.image || '/img/placeholder.jpg'}" alt="${product.name}" onerror="this.onerror=null; this.parentNode.innerHTML='<i class=\\'fas fa-image\\' style=\\'font-size:3rem; color:#94a3b8;\\'></i>';">
+                    </div>
+                    <div class="product-info">
+                        <span class="product-category">${product.category}</span>
+                        <div class="product-title">${product.name}</div>
+                        <div class="product-price">Rp ${formattedPrice} <span style="font-size:0.9rem;">/${product.unit}</span></div>
+                        <div class="product-desc">${product.description}</div>
+                        <a href="${waLink}" target="_blank" class="btn-wa-product">
+                            <i class="fab fa-whatsapp"></i> Tanya via WhatsApp
+                        </a>
+                    </div>
+                </div>
+            `;
+        }).join('');
+    }
+
+    function initFilters() {
+        document.querySelectorAll('.filter-chip').forEach(chip => {
+            chip.addEventListener('click', () => {
+                document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+                chip.classList.add('active');
+                activeCategory = chip.getAttribute('data-cat');
+                renderCatalog();
+            });
+        });
+        searchInput.addEventListener('input', renderCatalog);
+    }
+
+    // ========== INIT ==========
+    renderUserActions();
+    renderCatalog();
+    initFilters();
+</script>
+</body>
+</html>

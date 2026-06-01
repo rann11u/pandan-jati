@@ -1,0 +1,5477 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pandan Jati — Inventory & Procurement System</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+    <style>
+      :root {
+        --blue-50: #eff6ff;
+        --blue-100: #dbeafe;
+        --blue-200: #bfdbfe;
+        --blue-400: #60a5fa;
+        --blue-500: #3b82f6;
+        --blue-600: #2563eb;
+        --blue-700: #1d4ed8;
+        --blue-800: #1e40af;
+        --blue-900: #1e3a8a;
+        --sidebar-bg: #0f172a;
+        --sidebar-hover: #1e293b;
+        --sidebar-active: #1d4ed8;
+        --sidebar-border: rgba(255, 255, 255, 0.06);
+        --card-bg: #ffffff;
+        --card-border: #e2e8f0;
+        --page-bg: #f1f5f9;
+        --text-primary: #0f172a;
+        --text-secondary: #64748b;
+        --text-muted: #94a3b8;
+        --shadow-sm:
+          0 1px 3px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.04);
+        --shadow-md:
+          0 4px 12px rgba(0, 0, 0, 0.08), 0 2px 4px rgba(0, 0, 0, 0.04);
+        --shadow-lg:
+          0 10px 30px rgba(0, 0, 0, 0.1), 0 4px 8px rgba(0, 0, 0, 0.06);
+        --radius-sm: 8px;
+        --radius-md: 10px;
+        --radius-lg: 14px;
+        --radius-xl: 18px;
+        --green-50: #f0fdf4;
+        --green-100: #dcfce7;
+        --green-500: #22c55e;
+        --green-600: #16a34a;
+        --green-700: #15803d;
+        --amber-50: #fffbeb;
+        --amber-100: #fef3c7;
+        --amber-500: #f59e0b;
+        --amber-600: #d97706;
+        --red-50: #fef2f2;
+        --red-100: #fee2e2;
+        --red-500: #ef4444;
+        --red-600: #dc2626;
+        --purple-50: #faf5ff;
+        --purple-100: #ede9fe;
+        --purple-500: #8b5cf6;
+        --purple-600: #7c3aed;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Plus Jakarta Sans", sans-serif;
+        background: var(--page-bg);
+        color: var(--text-primary);
+        display: flex;
+        min-height: 100vh;
+        font-size: 14px;
+      }
+
+      /* ── SIDEBAR ── */
+      .sidebar {
+        width: 256px;
+        background: var(--sidebar-bg);
+        display: flex;
+        flex-direction: column;
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        z-index: 100;
+        transition: transform 0.3s ease;
+      }
+
+      .sidebar-logo {
+        padding: 20px 20px 16px;
+        border-bottom: 1px solid var(--sidebar-border);
+      }
+
+      .logo-badge {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .logo-icon {
+        width: 36px;
+        height: 36px;
+        background: var(--blue-600);
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 16px;
+        color: #fff;
+      }
+
+      .logo-text {
+        flex: 1;
+      }
+      .logo-title {
+        font-size: 13px;
+        font-weight: 700;
+        color: #fff;
+        line-height: 1.2;
+      }
+      .logo-sub {
+        font-size: 10px;
+        color: rgba(255, 255, 255, 0.4);
+        font-weight: 500;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+      }
+
+      .sidebar-nav {
+        flex: 1;
+        padding: 12px 10px;
+        overflow-y: auto;
+      }
+
+      .nav-section-label {
+        font-size: 10px;
+        font-weight: 600;
+        color: rgba(255, 255, 255, 0.3);
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        padding: 8px 10px 6px;
+        margin-top: 8px;
+      }
+
+      .nav-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 9px 12px;
+        border-radius: var(--radius-sm);
+        cursor: pointer;
+        transition: all 0.15s ease;
+        color: rgba(255, 255, 255, 0.5);
+        font-size: 13.5px;
+        font-weight: 500;
+        position: relative;
+      }
+
+      .nav-item:hover {
+        background: var(--sidebar-hover);
+        color: rgba(255, 255, 255, 0.85);
+      }
+      .nav-item.active {
+        background: var(--sidebar-active);
+        color: #fff;
+      }
+
+      .nav-item i {
+        width: 18px;
+        text-align: center;
+        font-size: 15px;
+        flex-shrink: 0;
+      }
+
+      .nav-badge {
+        margin-left: auto;
+        background: var(--red-500);
+        color: #fff;
+        font-size: 10px;
+        font-weight: 700;
+        padding: 2px 6px;
+        border-radius: 20px;
+        line-height: 1.4;
+      }
+
+      .sidebar-footer {
+        padding: 14px 10px;
+        border-top: 1px solid var(--sidebar-border);
+      }
+
+      .user-card {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 8px 10px;
+        border-radius: var(--radius-sm);
+      }
+
+      .user-avatar {
+        width: 32px;
+        height: 32px;
+        background: linear-gradient(135deg, var(--blue-600), var(--purple-600));
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 12px;
+        font-weight: 700;
+        color: #fff;
+        flex-shrink: 0;
+      }
+
+      .user-info .user-name {
+        font-size: 13px;
+        font-weight: 600;
+        color: #fff;
+      }
+      .user-info .user-role {
+        font-size: 11px;
+        color: rgba(255, 255, 255, 0.4);
+      }
+
+      /* ── MAIN CONTENT ── */
+      .main {
+        margin-left: 256px;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+      }
+
+      .topbar {
+        background: var(--card-bg);
+        border-bottom: 1px solid var(--card-border);
+        padding: 0 28px;
+        height: 58px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        position: sticky;
+        top: 0;
+        z-index: 50;
+        box-shadow: var(--shadow-sm);
+      }
+
+      .topbar-left {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .page-title {
+        font-size: 16px;
+        font-weight: 700;
+        color: var(--text-primary);
+      }
+      
+      /* Perbaikan search box di halaman inventory */
+        #page-inventory .search-box i {
+        position: absolute;
+        left: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--text-muted);
+        font-size: 14px;
+        z-index: 2;               /* pastikan di atas input */
+        pointer-events: none;     /* agar klik tidak terhalang */
+        }
+        #page-inventory .search-box input {
+        padding-left: 36px;       /* beri ruang untuk ikon */
+        text-indent: 0;
+        }
+
+      .page-breadcrumb {
+        font-size: 12px;
+        color: var(--text-muted);
+      }
+
+      .topbar-right {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .topbar-btn {
+        width: 36px;
+        height: 36px;
+        border-radius: var(--radius-sm);
+        border: 1px solid var(--card-border);
+        background: transparent;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--text-secondary);
+        font-size: 15px;
+        transition: all 0.15s;
+        position: relative;
+      }
+
+      .topbar-btn:hover {
+        background: var(--page-bg);
+        color: var(--text-primary);
+      }
+
+      .notif-dot {
+        position: absolute;
+        top: 6px;
+        right: 6px;
+        width: 7px;
+        height: 7px;
+        background: var(--red-500);
+        border-radius: 50%;
+        border: 1.5px solid #fff;
+      }
+
+      .date-chip {
+        background: var(--blue-50);
+        color: var(--blue-700);
+        padding: 6px 12px;
+        border-radius: var(--radius-sm);
+        font-size: 12px;
+        font-weight: 600;
+        border: 1px solid var(--blue-200);
+      }
+
+      /* ── PAGES ── */
+      .page {
+        display: none;
+      }
+      .page.active {
+        display: block;
+      }
+
+      .content-wrapper {
+        padding: 24px 28px;
+        max-width: 1400px;
+        margin: 0 auto; /* tetap ada */
+        width: 100%;
+        box-sizing: border-box;
+        }
+
+      /* ── CARDS ── */
+      .card {
+        background: var(--card-bg);
+        border: 1px solid var(--card-border);
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow-sm);
+      }
+
+      .card-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 18px 20px 14px;
+        border-bottom: 1px solid var(--card-border);
+      }
+
+      .card-title {
+        font-size: 14px;
+        font-weight: 700;
+        color: var(--text-primary);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .card-title i {
+        color: var(--blue-600);
+        font-size: 15px;
+      }
+
+      .card-body {
+        padding: 20px;
+      }
+
+      /* ── STAT CARDS ── */
+      .stat-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 16px;
+        margin-bottom: 22px;
+      }
+
+      .stat-card {
+        background: var(--card-bg);
+        border: 1px solid var(--card-border);
+        border-radius: var(--radius-lg);
+        padding: 18px 20px;
+        box-shadow: var(--shadow-sm);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .stat-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+      }
+
+      .stat-card.blue::before {
+        background: var(--blue-500);
+      }
+      .stat-card.green::before {
+        background: var(--green-500);
+      }
+      .stat-card.amber::before {
+        background: var(--amber-500);
+      }
+      .stat-card.red::before {
+        background: var(--red-500);
+      }
+
+      .stat-top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 12px;
+      }
+
+      .stat-label {
+        font-size: 12px;
+        font-weight: 600;
+        color: var(--text-muted);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+
+      .stat-icon {
+        width: 36px;
+        height: 36px;
+        border-radius: var(--radius-sm);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 16px;
+      }
+
+      .stat-icon.blue {
+        background: var(--blue-50);
+        color: var(--blue-600);
+      }
+      .stat-icon.green {
+        background: var(--green-50);
+        color: var(--green-600);
+      }
+      .stat-icon.amber {
+        background: var(--amber-50);
+        color: var(--amber-600);
+      }
+      .stat-icon.red {
+        background: var(--red-50);
+        color: var(--red-600);
+      }
+      .stat-icon.purple {
+        background: var(--purple-50);
+        color: var(--purple-600);
+      }
+
+      .stat-value {
+        font-size: 28px;
+        font-weight: 800;
+        color: var(--text-primary);
+        line-height: 1;
+        margin-bottom: 4px;
+      }
+
+      .stat-sub {
+        font-size: 12px;
+        color: var(--text-secondary);
+        font-weight: 500;
+      }
+
+      /* ── STATUS BADGES ── */
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        padding: 3px 9px;
+        border-radius: 20px;
+        font-size: 11.5px;
+        font-weight: 600;
+        white-space: nowrap;
+      }
+
+      .badge-aman {
+        background: var(--green-100);
+        color: var(--green-700);
+      }
+      .badge-menipis {
+        background: var(--amber-100);
+        color: var(--amber-600);
+      }
+      .badge-kritis {
+        background: var(--red-100);
+        color: var(--red-600);
+      }
+      .badge-dipesan {
+        background: var(--blue-100);
+        color: var(--blue-700);
+      }
+      .badge-diproses {
+        background: var(--purple-100);
+        color: var(--purple-600);
+      }
+      .badge-diterima {
+        background: var(--green-100);
+        color: var(--green-700);
+      }
+      .badge-aktif {
+        background: var(--green-100);
+        color: var(--green-700);
+      }
+      .badge-info {
+        background: var(--blue-50);
+        color: var(--blue-700);
+      }
+
+      .badge::before {
+        content: "";
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background: currentColor;
+        flex-shrink: 0;
+      }
+
+      /* ── BUTTONS ── */
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 7px 14px;
+        border-radius: var(--radius-sm);
+        font-size: 13px;
+        font-weight: 600;
+        cursor: pointer;
+        border: none;
+        transition: all 0.15s ease;
+        font-family: "Plus Jakarta Sans", sans-serif;
+        white-space: nowrap;
+      }
+
+      .btn-primary {
+        background: var(--blue-600);
+        color: #fff;
+      }
+      .btn-primary:hover {
+        background: var(--blue-700);
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+      }
+
+      .btn-outline {
+        background: transparent;
+        border: 1px solid var(--card-border);
+        color: var(--text-secondary);
+      }
+      .btn-outline:hover {
+        background: var(--page-bg);
+        color: var(--text-primary);
+      }
+
+      .btn-wa {
+        background: #25d366;
+        color: #fff;
+        font-size: 12px;
+        padding: 6px 11px;
+      }
+      .btn-wa:hover {
+        background: #128c7e;
+        transform: translateY(-1px);
+      }
+
+      .btn-danger {
+        background: var(--red-50);
+        color: var(--red-600);
+        border: 1px solid var(--red-100);
+      }
+      .btn-danger:hover {
+        background: var(--red-100);
+      }
+
+      .btn-success {
+        background: var(--green-500);
+        color: #fff;
+      }
+      .btn-success:hover {
+        background: var(--green-600);
+      }
+
+      .btn-sm {
+        padding: 5px 10px;
+        font-size: 12px;
+      }
+      .btn-xs {
+        padding: 4px 8px;
+        font-size: 11px;
+      }
+
+      /* ── TABLE ── */
+      .table-wrapper {
+        overflow-x: auto;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      thead th {
+        background: var(--page-bg);
+        padding: 10px 14px;
+        text-align: left;
+        font-size: 11.5px;
+        font-weight: 700;
+        color: var(--text-muted);
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        border-bottom: 1px solid var(--card-border);
+        white-space: nowrap;
+      }
+
+      tbody tr {
+        border-bottom: 1px solid #f1f5f9;
+        transition: background 0.1s;
+      }
+
+      tbody tr:last-child {
+        border-bottom: none;
+      }
+      tbody tr:hover {
+        background: #f8fafc;
+      }
+
+      td {
+        padding: 12px 14px;
+        font-size: 13px;
+        color: var(--text-primary);
+        vertical-align: middle;
+      }
+
+      .td-code {
+        font-family: monospace;
+        font-size: 12px;
+        color: var(--text-secondary);
+        background: var(--page-bg);
+        padding: 3px 7px;
+        border-radius: 5px;
+        border: 1px solid var(--card-border);
+      }
+
+      /* ── SEARCH & FILTER BAR ── */
+      .toolbar {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 16px;
+        flex-wrap: wrap;
+      }
+
+      .search-box {
+        position: relative;
+        flex: 1;
+        min-width: 220px;
+      }
+
+      .search-box i {
+        position: absolute;
+        left: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--text-muted);
+        font-size: 14px;
+      }
+
+      .search-box input {
+        width: 100%;
+        padding: 9px 12px 9px 36px;
+        border: 1px solid var(--card-border);
+        border-radius: var(--radius-sm);
+        font-size: 13px;
+        font-family: "Plus Jakarta Sans", sans-serif;
+        color: var(--text-primary);
+        background: var(--card-bg);
+        transition: border-color 0.15s;
+      }
+
+      .search-box input:focus {
+        outline: none;
+        border-color: var(--blue-400);
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+      }
+      .search-box input::placeholder {
+        color: var(--text-muted);
+      }
+
+      select,
+      input[type="text"],
+      input[type="number"],
+      input[type="date"],
+      textarea {
+        padding: 8px 12px;
+        border: 1px solid var(--card-border);
+        border-radius: var(--radius-sm);
+        font-size: 13px;
+        font-family: "Plus Jakarta Sans", sans-serif;
+        color: var(--text-primary);
+        background: var(--card-bg);
+        cursor: pointer;
+        transition: border-color 0.15s;
+      }
+
+      select:focus,
+      input:focus,
+      textarea:focus {
+        outline: none;
+        border-color: var(--blue-400);
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+      }
+
+      /* ── STOCK PROGRESS BAR ── */
+      .stock-bar-wrap {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .stock-bar {
+        flex: 1;
+        height: 5px;
+        background: #e2e8f0;
+        border-radius: 10px;
+        overflow: hidden;
+        min-width: 80px;
+      }
+      .stock-fill {
+        height: 100%;
+        border-radius: 10px;
+        transition: width 0.3s;
+      }
+      .stock-text {
+        font-size: 12px;
+        font-weight: 600;
+        color: var(--text-secondary);
+        min-width: 55px;
+        text-align: right;
+      }
+
+      /* ── ALERT SECTION ── */
+      .alert-item {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        padding: 12px 16px;
+        border-radius: var(--radius-md);
+        margin-bottom: 8px;
+        border: 1px solid;
+        transition: all 0.15s;
+        cursor: pointer;
+      }
+
+      .alert-item:hover {
+        transform: translateX(3px);
+      }
+
+      .alert-item.kritis {
+        background: var(--red-50);
+        border-color: #fecaca;
+      }
+
+      .alert-item.menipis {
+        background: var(--amber-50);
+        border-color: #fde68a;
+      }
+
+      .alert-icon {
+        width: 36px;
+        height: 36px;
+        border-radius: var(--radius-sm);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 15px;
+        flex-shrink: 0;
+      }
+
+      .alert-icon.red {
+        background: var(--red-100);
+        color: var(--red-600);
+      }
+      .alert-icon.amber {
+        background: var(--amber-100);
+        color: var(--amber-600);
+      }
+
+      .alert-info {
+        flex: 1;
+      }
+      .alert-name {
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--text-primary);
+      }
+      .alert-detail {
+        font-size: 11.5px;
+        color: var(--text-secondary);
+        margin-top: 1px;
+      }
+      .alert-actions {
+        display: flex;
+        gap: 6px;
+      }
+
+      /* ── SUPPLIER CARDS ── */
+      .supplier-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 16px;
+        justify-content: center;
+      }
+
+      .supplier-card {
+        background: var(--card-bg);
+        border: 1px solid var(--card-border);
+        border-radius: var(--radius-lg);
+        padding: 18px 20px;
+        box-shadow: var(--shadow-sm);
+        transition: all 0.2s;
+      }
+
+      .supplier-card:hover {
+        box-shadow: var(--shadow-md);
+        transform: translateY(-2px);
+      }
+
+      .supplier-head {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+        margin-bottom: 14px;
+      }
+
+      .supplier-avatar {
+        width: 44px;
+        height: 44px;
+        border-radius: var(--radius-md);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+        font-weight: 800;
+        color: #fff;
+        flex-shrink: 0;
+      }
+
+      .supplier-name {
+        font-size: 14px;
+        font-weight: 700;
+        color: var(--text-primary);
+      }
+      .supplier-type {
+        font-size: 12px;
+        color: var(--text-secondary);
+        margin-top: 2px;
+      }
+
+      .supplier-rating {
+        display: flex;
+        align-items: center;
+        gap: 3px;
+        margin-top: 4px;
+      }
+      .star {
+        font-size: 12px;
+      }
+      .star.filled {
+        color: #f59e0b;
+      }
+      .star.empty {
+        color: #e2e8f0;
+      }
+      .rating-text {
+        font-size: 12px;
+        color: var(--text-secondary);
+        margin-left: 4px;
+      }
+
+      .supplier-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 5px;
+        margin-bottom: 14px;
+      }
+      .tag {
+        background: var(--blue-50);
+        color: var(--blue-700);
+        font-size: 11px;
+        font-weight: 600;
+        padding: 2px 8px;
+        border-radius: 20px;
+        border: 1px solid var(--blue-200);
+      }
+
+      .supplier-meta {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 10px;
+        padding: 12px 0;
+        border-top: 1px solid var(--card-border);
+        border-bottom: 1px solid var(--card-border);
+        margin-bottom: 14px;
+      }
+
+      .meta-item {
+        text-align: center;
+      }
+      .meta-val {
+        font-size: 14px;
+        font-weight: 700;
+        color: var(--text-primary);
+      }
+      .meta-lbl {
+        font-size: 10.5px;
+        color: var(--text-muted);
+        margin-top: 1px;
+      }
+
+      .supplier-footer {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+      }
+      .supplier-phone {
+        font-size: 12px;
+        color: var(--text-secondary);
+        flex: 1;
+      }
+      .supplier-phone i {
+        color: var(--green-500);
+        margin-right: 4px;
+      }
+
+      /* ── PROCUREMENT ── */
+      .po-item {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        padding: 14px 0;
+        border-bottom: 1px solid #f1f5f9;
+      }
+      .po-item:last-child {
+        border-bottom: none;
+      }
+
+      .po-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: var(--radius-md);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 16px;
+        flex-shrink: 0;
+        background: var(--blue-50);
+        color: var(--blue-600);
+      }
+
+      .po-info {
+        flex: 1;
+      }
+      .po-name {
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--text-primary);
+      }
+      .po-detail {
+        font-size: 11.5px;
+        color: var(--text-secondary);
+        margin-top: 2px;
+      }
+      .po-meta {
+        text-align: right;
+      }
+      .po-date {
+        font-size: 11px;
+        color: var(--text-muted);
+        margin-bottom: 4px;
+      }
+
+      /* ── PERFORMANCE BARS ── */
+      .perf-item {
+        margin-bottom: 14px;
+      }
+      .perf-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 5px;
+      }
+      .perf-name {
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--text-primary);
+      }
+      .perf-score {
+        font-size: 12px;
+        font-weight: 700;
+        color: var(--text-secondary);
+      }
+      .perf-bar {
+        height: 6px;
+        background: #e2e8f0;
+        border-radius: 10px;
+        overflow: hidden;
+      }
+      .perf-fill {
+        height: 100%;
+        border-radius: 10px;
+      }
+
+      /* ── TIMELINE ── */
+      .timeline {
+        position: relative;
+        padding-left: 20px;
+      }
+      .timeline::before {
+        content: "";
+        position: absolute;
+        left: 6px;
+        top: 8px;
+        bottom: 8px;
+        width: 1.5px;
+        background: var(--card-border);
+      }
+
+      .timeline-item {
+        position: relative;
+        padding-bottom: 18px;
+      }
+
+      .timeline-dot {
+        position: absolute;
+        left: -20px;
+        top: 5px;
+        width: 13px;
+        height: 13px;
+        border-radius: 50%;
+        border: 2.5px solid #fff;
+        box-shadow: 0 0 0 1.5px var(--card-border);
+      }
+
+      .tl-date {
+        font-size: 11px;
+        color: var(--text-muted);
+        margin-bottom: 3px;
+      }
+      .tl-title {
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--text-primary);
+      }
+      .tl-sub {
+        font-size: 12px;
+        color: var(--text-secondary);
+        margin-top: 1px;
+      }
+
+      /* ── MODAL ── */
+      .modal-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(15, 23, 42, 0.5);
+        backdrop-filter: blur(4px);
+        z-index: 200;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+      }
+
+      .modal-overlay.open {
+        display: flex;
+      }
+
+      .modal {
+        background: var(--card-bg);
+        border-radius: var(--radius-xl);
+        width: 100%;
+        max-width: 520px;
+        box-shadow: var(--shadow-lg);
+        overflow: hidden;
+        animation: slideUp 0.25s ease;
+      }
+
+      @keyframes slideUp {
+        from {
+          transform: translateY(20px);
+          opacity: 0;
+        }
+        to {
+          transform: translateY(0);
+          opacity: 1;
+        }
+      }
+
+      .modal-header {
+        padding: 18px 20px;
+        border-bottom: 1px solid var(--card-border);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .modal-title {
+        font-size: 15px;
+        font-weight: 700;
+      }
+      .modal-close {
+        width: 30px;
+        height: 30px;
+        border-radius: var(--radius-sm);
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--text-secondary);
+        font-size: 16px;
+        transition: all 0.15s;
+      }
+      .modal-close:hover {
+        background: var(--page-bg);
+        color: var(--text-primary);
+      }
+
+      .modal-body {
+        padding: 20px;
+      }
+      .modal-footer {
+        padding: 14px 20px;
+        border-top: 1px solid var(--card-border);
+        display: flex;
+        gap: 10px;
+        justify-content: flex-end;
+      }
+
+      .wa-preview {
+        background: #ecf9f1;
+        border: 1px solid #a7f3d0;
+        border-radius: var(--radius-md);
+        padding: 14px 16px;
+        font-size: 13px;
+        line-height: 1.6;
+        color: #0f172a;
+        white-space: pre-wrap;
+        font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+      }
+
+      .wa-header {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 14px;
+        padding-bottom: 12px;
+        border-bottom: 1px solid #a7f3d0;
+      }
+
+      .wa-logo {
+        width: 30px;
+        height: 30px;
+        background: #25d366;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+        font-size: 15px;
+      }
+
+      /* ── FORM ── */
+      .form-group {
+        margin-bottom: 16px;
+      }
+      .form-label {
+        display: block;
+        font-size: 12.5px;
+        font-weight: 600;
+        color: var(--text-secondary);
+        margin-bottom: 6px;
+      }
+      .form-control {
+        width: 100%;
+        padding: 9px 12px;
+        border: 1px solid var(--card-border);
+        border-radius: var(--radius-sm);
+        font-size: 13px;
+        font-family: "Plus Jakarta Sans", sans-serif;
+        color: var(--text-primary);
+        background: var(--card-bg);
+        transition: all 0.15s;
+      }
+      .form-control:focus {
+        outline: none;
+        border-color: var(--blue-400);
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+      }
+      .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 14px;
+      }
+      textarea.form-control {
+        resize: vertical;
+        min-height: 80px;
+      }
+
+      /* ── REPORTS ── */
+      .report-card {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        padding: 18px 20px;
+        background: var(--card-bg);
+        border: 1px solid var(--card-border);
+        border-radius: var(--radius-lg);
+        cursor: pointer;
+        transition: all 0.15s;
+        box-shadow: var(--shadow-sm);
+      }
+
+      .report-card:hover {
+        box-shadow: var(--shadow-md);
+        transform: translateY(-2px);
+      }
+
+      .report-icon {
+        width: 46px;
+        height: 46px;
+        border-radius: var(--radius-md);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 20px;
+        flex-shrink: 0;
+      }
+
+      .report-title {
+        font-size: 14px;
+        font-weight: 700;
+        color: var(--text-primary);
+      }
+      .report-desc {
+        font-size: 12px;
+        color: var(--text-secondary);
+        margin-top: 2px;
+      }
+
+      /* ── DONUT CHART ── */
+      .donut-wrap {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+      }
+      .donut-legend {
+        flex: 1;
+      }
+      .legend-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 8px;
+        font-size: 12.5px;
+      }
+      .legend-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        flex-shrink: 0;
+      }
+      .legend-label {
+        flex: 1;
+        color: var(--text-secondary);
+      }
+      .legend-val {
+        font-weight: 700;
+        color: var(--text-primary);
+      }
+
+      /* ── MINI CHART (bar) ── */
+      .bar-chart {
+        display: flex;
+        align-items: flex-end;
+        gap: 5px;
+        height: 60px;
+      }
+      .bar-col {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 3px;
+      }
+      .bar-fill {
+        width: 100%;
+        border-radius: 4px 4px 0 0;
+        transition: all 0.3s;
+        background: var(--blue-400);
+      }
+      .bar-label {
+        font-size: 9.5px;
+        color: var(--text-muted);
+      }
+
+      /* ── SECTION HEADER ── */
+      .section-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 16px;
+      }
+
+      .section-title {
+        font-size: 15px;
+        font-weight: 700;
+        color: var(--text-primary);
+      }
+
+      .section-sub {
+        font-size: 12px;
+        color: var(--text-muted);
+        margin-top: 2px;
+      }
+
+      /* ── EMPTY STATE ── */
+      .empty-state {
+        text-align: center;
+        padding: 40px 20px;
+        color: var(--text-muted);
+      }
+      .empty-state i {
+        font-size: 36px;
+        opacity: 0.4;
+        margin-bottom: 10px;
+        display: block;
+      }
+      .empty-state p {
+        font-size: 13px;
+      }
+
+      /* ── TABS ── */
+      .tab-group {
+        display: flex;
+        gap: 4px;
+        background: var(--page-bg);
+        padding: 4px;
+        border-radius: var(--radius-md);
+      }
+      .tab {
+        padding: 6px 14px;
+        border-radius: 7px;
+        font-size: 12.5px;
+        font-weight: 600;
+        cursor: pointer;
+        color: var(--text-secondary);
+        transition: all 0.15s;
+        border: none;
+        background: transparent;
+        font-family: "Plus Jakarta Sans", sans-serif;
+      }
+      .tab.active {
+        background: #fff;
+        color: var(--blue-700);
+        box-shadow: var(--shadow-sm);
+      }
+      .tab-content {
+        display: none;
+      }
+      .tab-content.active {
+        display: block;
+      }
+
+      /* ── RESPONSIVE ── */
+      @media (max-width: 900px) {
+        .sidebar {
+          transform: translateX(-100%);
+        }
+        .sidebar.open {
+          transform: translateX(0);
+        }
+        .main {
+          margin-left: 0;
+        }
+        .stat-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .content-wrapper {
+          padding: 16px;
+        }
+      }
+
+      @media (max-width: 560px) {
+        .stat-grid {
+          grid-template-columns: 1fr;
+        }
+        .form-row {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      /* ── MISC ── */
+      .flex {
+        display: flex;
+      }
+      .items-center {
+        align-items: center;
+      }
+      .gap-8 {
+        gap: 8px;
+      }
+      .gap-10 {
+        gap: 10px;
+      }
+      .gap-12 {
+        gap: 12px;
+      }
+      .flex-1 {
+        flex: 1;
+      }
+      .text-muted {
+        color: var(--text-muted);
+      }
+      .text-sm {
+        font-size: 12px;
+      }
+      .text-xs {
+        font-size: 11px;
+      }
+      .fw-600 {
+        font-weight: 600;
+      }
+      .fw-700 {
+        font-weight: 700;
+      }
+      .mt-4 {
+        margin-top: 4px;
+      }
+      .mt-8 {
+        margin-top: 8px;
+      }
+      .mt-12 {
+        margin-top: 12px;
+      }
+      .mt-16 {
+        margin-top: 16px;
+      }
+      .mt-20 {
+        margin-top: 20px;
+      }
+      .mb-16 {
+        margin-bottom: 16px;
+      }
+      .grid-2 {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+      }
+      .grid-3 {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 16px;
+      }
+      .color-green {
+        color: var(--green-600);
+      }
+      .color-red {
+        color: var(--red-600);
+      }
+      .color-amber {
+        color: var(--amber-600);
+      }
+      .color-blue {
+        color: var(--blue-600);
+      }
+
+      .chip {
+        display: inline-block;
+        background: var(--page-bg);
+        border: 1px solid var(--card-border);
+        border-radius: 20px;
+        padding: 2px 10px;
+        font-size: 12px;
+        font-weight: 600;
+        color: var(--text-secondary);
+      }
+
+      .divider {
+        height: 1px;
+        background: var(--card-border);
+        margin: 14px 0;
+      }
+
+      .action-group {
+        display: flex;
+        gap: 6px;
+        align-items: center;
+      }
+
+      .info-box {
+        background: var(--blue-50);
+        border: 1px solid var(--blue-200);
+        border-radius: var(--radius-md);
+        padding: 12px 14px;
+        font-size: 12.5px;
+        color: var(--blue-700);
+        display: flex;
+        gap: 8px;
+        align-items: flex-start;
+      }
+
+      .info-box i {
+        margin-top: 1px;
+        flex-shrink: 0;
+      }
+
+      /* Highlight row */
+      tr.highlight-kritis td {
+        background: #fff5f5 !important;
+      }
+      tr.highlight-menipis td {
+        background: #fffbf0 !important;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- ═══════════ SIDEBAR ═══════════ -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-logo">
+        <div class="logo-badge">
+          <div class="logo-icon"><i class="fa-solid fa-layer-group"></i></div>
+          <div class="logo-text">
+            <div class="logo-title">Pandan Jati</div>
+            <div class="logo-sub">Inventory System</div>
+          </div>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <div class="nav-section-label">Menu Utama</div>
+        <div class="nav-item active" data-page="dashboard">
+          <i class="fa-solid fa-house-chimney"></i>
+          <span>Dashboard</span>
+        </div>
+        <div class="nav-item" data-page="inventory">
+          <i class="fa-solid fa-box-open"></i>
+          <span>Inventory</span>
+          <span class="nav-badge" id="nb-kritis">3</span>
+        </div>
+        <div class="nav-item" data-page="supplier">
+          <i class="fa-solid fa-truck"></i>
+          <span>Supplier</span>
+        </div>
+        <div class="nav-item" data-page="procurement">
+          <i class="fa-solid fa-clipboard-list"></i>
+          <span>Procurement</span>
+          <span
+            class="nav-badge"
+            id="nb-po"
+            style="background: var(--amber-500)"
+            >2</span
+          >
+        </div>
+        <div class="nav-item" data-page="reports">
+          <i class="fa-solid fa-chart-bar"></i>
+          <span>Reports</span>
+        </div>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="user-card">
+          <div class="user-avatar">PD</div>
+          <div class="user-info">
+            <div class="user-name">Pak Darno</div>
+            <div class="user-role">Pemilik Toko</div>
+          </div>
+        </div>
+        <button
+          class="btn btn-outline btn-sm"
+          style="
+            width: 100%;
+            margin-top: 8px;
+            color: #dc2626;
+            border-color: rgba(255, 255, 255, 0.15);
+          "
+          onclick="logout()"
+        >
+          <i class="fa-solid fa-sign-out-alt"></i> Keluar
+        </button>
+      </div>
+    </aside>
+
+    <!-- ═══════════ MAIN ═══════════ -->
+    <main class="main">
+      <!-- TOPBAR -->
+      <header class="topbar">
+        <div class="topbar-left">
+          <button class="topbar-btn" id="menuBtn" style="display: none">
+            <i class="fa-solid fa-bars"></i>
+          </button>
+          <div>
+            <div class="page-title" id="topbarTitle">Dashboard</div>
+            <div class="page-breadcrumb" id="topbarSub">
+              Selamat datang, Pak Darno
+            </div>
+          </div>
+        </div>
+        <div class="topbar-right">
+          <div class="date-chip">
+            <i class="fa-regular fa-calendar" style="margin-right: 5px"></i
+            ><span id="dateStr"></span>
+          </div>
+          <button class="topbar-btn" onclick="showAlerts()">
+            <i class="fa-regular fa-bell"></i>
+            <span class="notif-dot"></span>
+          </button>
+        </div>
+      </header>
+
+      <!-- ═══ PAGE: DASHBOARD ═══ -->
+      <div class="page active content-wrapper" id="page-dashboard">
+        <!-- STAT CARDS -->
+        <div class="stat-grid">
+          <div class="stat-card blue">
+            <div class="stat-top">
+              <div class="stat-label">Total Produk</div>
+              <div class="stat-icon blue">
+                <i class="fa-solid fa-boxes-stacked"></i>
+              </div>
+            </div>
+            <div class="stat-value">124</div>
+            <div class="stat-sub">8 kategori produk</div>
+          </div>
+          <div class="stat-card green">
+            <div class="stat-top">
+              <div class="stat-label">Supplier Aktif</div>
+              <div class="stat-icon green">
+                <i class="fa-solid fa-handshake"></i>
+              </div>
+            </div>
+            <div class="stat-value">7</div>
+            <div class="stat-sub">3 teratas performa baik</div>
+          </div>
+          <div class="stat-card amber">
+            <div class="stat-top">
+              <div class="stat-label">Stok Menipis</div>
+              <div class="stat-icon amber">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+              </div>
+            </div>
+            <div class="stat-value">8</div>
+            <div class="stat-sub">
+              <span style="color: var(--red-600); font-weight: 700"
+                >3 kritis</span
+              >, 5 menipis
+            </div>
+          </div>
+          <div class="stat-card red">
+            <div class="stat-top">
+              <div class="stat-label">PO Pending</div>
+              <div
+                class="stat-icon"
+                style="background: var(--purple-50); color: var(--purple-600)"
+              >
+                <i class="fa-solid fa-clock"></i>
+              </div>
+            </div>
+            <div class="stat-value">2</div>
+            <div class="stat-sub">Menunggu konfirmasi</div>
+          </div>
+        </div>
+
+        <!-- 3-COLUMN LAYOUT -->
+        <div
+          style="
+            display: grid;
+            grid-template-columns: 1fr 1fr 1.1fr;
+            gap: 16px;
+            margin-bottom: 16px;
+          "
+        >
+          <!-- CRITICAL STOCK ALERT -->
+          <div class="card" style="grid-column: 1/3">
+            <div class="card-header">
+              <div class="card-title">
+                <i class="fa-solid fa-circle-exclamation"></i> Critical Stock
+                Alert
+              </div>
+              <button
+                class="btn btn-outline btn-sm"
+                onclick="navigate('inventory')"
+              >
+                Lihat Semua <i class="fa-solid fa-arrow-right"></i>
+              </button>
+            </div>
+            <div class="card-body" style="padding: 14px">
+              <div
+                class="alert-item kritis"
+                onclick="
+                  openWAModal(
+                    'Keramik Granit 60x60 Abu-abu',
+                    'CV Mitra Keramik',
+                    '+62 812-3456-7890',
+                    5,
+                    'Dus',
+                  )
+                "
+              >
+                <div class="alert-icon red">
+                  <i class="fa-solid fa-fire"></i>
+                </div>
+                <div class="alert-info">
+                  <div class="alert-name">Keramik Granit 60x60 Abu-abu</div>
+                  <div class="alert-detail">
+                    Stok: <strong>5 Dus</strong> — Minimum: 20 Dus · Supplier:
+                    CV Mitra Keramik
+                  </div>
+                </div>
+                <div class="alert-actions">
+                  <span class="badge badge-kritis">Kritis</span>
+                  <button
+                    class="btn btn-wa btn-sm"
+                    onclick="
+                      event.stopPropagation();
+                      openWAModal(
+                        'Keramik Granit 60x60 Abu-abu',
+                        'CV Mitra Keramik',
+                        '+62 812-3456-7890',
+                        30,
+                        'Dus',
+                      );
+                    "
+                  >
+                    <i class="fa-brands fa-whatsapp"></i> Pesan
+                  </button>
+                </div>
+              </div>
+              <div
+                class="alert-item kritis"
+                onclick="
+                  openWAModal(
+                    'Cat Tembok Putih 25kg',
+                    'UD Warna Jaya',
+                    '+62 821-9988-7766',
+                    2,
+                    'Kaleng',
+                  )
+                "
+              >
+                <div class="alert-icon red">
+                  <i class="fa-solid fa-fire"></i>
+                </div>
+                <div class="alert-info">
+                  <div class="alert-name">Cat Tembok Putih 25kg</div>
+                  <div class="alert-detail">
+                    Stok: <strong>2 Kaleng</strong> — Minimum: 15 Kaleng ·
+                    Supplier: UD Warna Jaya
+                  </div>
+                </div>
+                <div class="alert-actions">
+                  <span class="badge badge-kritis">Kritis</span>
+                  <button
+                    class="btn btn-wa btn-sm"
+                    onclick="
+                      event.stopPropagation();
+                      openWAModal(
+                        'Cat Tembok Putih 25kg',
+                        'UD Warna Jaya',
+                        '+62 821-9988-7766',
+                        20,
+                        'Kaleng',
+                      );
+                    "
+                  >
+                    <i class="fa-brands fa-whatsapp"></i> Pesan
+                  </button>
+                </div>
+              </div>
+              <div
+                class="alert-item kritis"
+                onclick="
+                  openWAModal(
+                    'Closet Duduk Standard',
+                    'PT Sanitasi Prima',
+                    '+62 811-2233-4455',
+                    1,
+                    'Unit',
+                  )
+                "
+              >
+                <div class="alert-icon red">
+                  <i class="fa-solid fa-fire"></i>
+                </div>
+                <div class="alert-info">
+                  <div class="alert-name">Closet Duduk Standard</div>
+                  <div class="alert-detail">
+                    Stok: <strong>1 Unit</strong> — Minimum: 5 Unit · Supplier:
+                    PT Sanitasi Prima
+                  </div>
+                </div>
+                <div class="alert-actions">
+                  <span class="badge badge-kritis">Kritis</span>
+                  <button
+                    class="btn btn-wa btn-sm"
+                    onclick="
+                      event.stopPropagation();
+                      openWAModal(
+                        'Closet Duduk Standard',
+                        'PT Sanitasi Prima',
+                        '+62 811-2233-4455',
+                        8,
+                        'Unit',
+                      );
+                    "
+                  >
+                    <i class="fa-brands fa-whatsapp"></i> Pesan
+                  </button>
+                </div>
+              </div>
+              <div class="alert-item menipis">
+                <div class="alert-icon amber">
+                  <i class="fa-solid fa-exclamation"></i>
+                </div>
+                <div class="alert-info">
+                  <div class="alert-name">
+                    Pipa PVC 4" — Stok: 12 Batang (Min: 30)
+                  </div>
+                  <div class="alert-detail">
+                    Supplier: Toko Plastik Sentosa · +62 856-1122-3344
+                  </div>
+                </div>
+                <div class="alert-actions">
+                  <span class="badge badge-menipis">Menipis</span>
+                  <button
+                    class="btn btn-wa btn-sm"
+                    onclick="
+                      openWAModal(
+                        'Pipa PVC 4 Inch',
+                        'Toko Plastik Sentosa',
+                        '+62 856-1122-3344',
+                        50,
+                        'Batang',
+                      )
+                    "
+                  >
+                    <i class="fa-brands fa-whatsapp"></i> Pesan
+                  </button>
+                </div>
+              </div>
+              <div class="alert-item menipis">
+                <div class="alert-icon amber">
+                  <i class="fa-solid fa-exclamation"></i>
+                </div>
+                <div class="alert-info">
+                  <div class="alert-name">
+                    Besi Hollow 4x4 — Stok: 8 Batang (Min: 25)
+                  </div>
+                  <div class="alert-detail">
+                    Supplier: CV Besi Mandiri · +62 877-5566-7788
+                  </div>
+                </div>
+                <div class="alert-actions">
+                  <span class="badge badge-menipis">Menipis</span>
+                  <button
+                    class="btn btn-wa btn-sm"
+                    onclick="
+                      openWAModal(
+                        'Besi Hollow 4x4',
+                        'CV Besi Mandiri',
+                        '+62 877-5566-7788',
+                        40,
+                        'Batang',
+                      )
+                    "
+                  >
+                    <i class="fa-brands fa-whatsapp"></i> Pesan
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- SUPPLIER PERFORMANCE -->
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">
+                <i class="fa-solid fa-star"></i> Supplier Performance
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="perf-item">
+                <div class="perf-header">
+                  <div class="perf-name">CV Mitra Keramik</div>
+                  <div class="perf-score">92%</div>
+                </div>
+                <div class="perf-bar">
+                  <div
+                    class="perf-fill"
+                    style="width: 92%; background: var(--green-500)"
+                  ></div>
+                </div>
+              </div>
+              <div class="perf-item">
+                <div class="perf-header">
+                  <div class="perf-name">UD Warna Jaya</div>
+                  <div class="perf-score">78%</div>
+                </div>
+                <div class="perf-bar">
+                  <div
+                    class="perf-fill"
+                    style="width: 78%; background: var(--blue-500)"
+                  ></div>
+                </div>
+              </div>
+              <div class="perf-item">
+                <div class="perf-header">
+                  <div class="perf-name">PT Sanitasi Prima</div>
+                  <div class="perf-score">85%</div>
+                </div>
+                <div class="perf-bar">
+                  <div
+                    class="perf-fill"
+                    style="width: 85%; background: var(--blue-500)"
+                  ></div>
+                </div>
+              </div>
+              <div class="perf-item">
+                <div class="perf-header">
+                  <div class="perf-name">Toko Plastik Sentosa</div>
+                  <div class="perf-score">65%</div>
+                </div>
+                <div class="perf-bar">
+                  <div
+                    class="perf-fill"
+                    style="width: 65%; background: var(--amber-500)"
+                  ></div>
+                </div>
+              </div>
+              <div class="perf-item" style="margin-bottom: 0">
+                <div class="perf-header">
+                  <div class="perf-name">CV Besi Mandiri</div>
+                  <div class="perf-score">55%</div>
+                </div>
+                <div class="perf-bar">
+                  <div
+                    class="perf-fill"
+                    style="width: 55%; background: var(--red-400)"
+                  ></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- REORDER + ACTIVITY -->
+        <div class="grid-2">
+          <!-- REORDER RECOMMENDATION -->
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">
+                <i class="fa-solid fa-rotate"></i> Reorder Recommendation
+              </div>
+              <span class="chip">5 item</span>
+            </div>
+            <div class="card-body" style="padding-top: 12px">
+              <div class="info-box mb-16">
+                <i class="fa-solid fa-circle-info"></i>
+                <span
+                  >Klik <strong>Pesan Supplier</strong> untuk membuat pesan WA
+                  otomatis dan langsung menghubungi supplier.</span
+                >
+              </div>
+
+              <div style="display: flex; flex-direction: column; gap: 10px">
+                <div
+                  style="
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    padding: 10px 12px;
+                    background: var(--page-bg);
+                    border-radius: var(--radius-md);
+                    border: 1px solid var(--card-border);
+                  "
+                >
+                  <div>
+                    <div style="font-size: 13px; font-weight: 600">
+                      Keramik Putih 40x40
+                    </div>
+                    <div
+                      style="font-size: 11.5px; color: var(--text-secondary)"
+                    >
+                      Perlu: 50 Dus · CV Mitra Keramik
+                    </div>
+                  </div>
+                  <button
+                    class="btn btn-wa btn-sm"
+                    onclick="
+                      openWAModal(
+                        'Keramik Putih 40x40',
+                        'CV Mitra Keramik',
+                        '+62 812-3456-7890',
+                        50,
+                        'Dus',
+                      )
+                    "
+                  >
+                    <i class="fa-brands fa-whatsapp"></i> Pesan
+                  </button>
+                </div>
+                <div
+                  style="
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    padding: 10px 12px;
+                    background: var(--page-bg);
+                    border-radius: var(--radius-md);
+                    border: 1px solid var(--card-border);
+                  "
+                >
+                  <div>
+                    <div style="font-size: 13px; font-weight: 600">
+                      Cat Tembok Putih 25kg
+                    </div>
+                    <div
+                      style="font-size: 11.5px; color: var(--text-secondary)"
+                    >
+                      Perlu: 20 Kaleng · UD Warna Jaya
+                    </div>
+                  </div>
+                  <button
+                    class="btn btn-wa btn-sm"
+                    onclick="
+                      openWAModal(
+                        'Cat Tembok Putih 25kg',
+                        'UD Warna Jaya',
+                        '+62 821-9988-7766',
+                        20,
+                        'Kaleng',
+                      )
+                    "
+                  >
+                    <i class="fa-brands fa-whatsapp"></i> Pesan
+                  </button>
+                </div>
+                <div
+                  style="
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    padding: 10px 12px;
+                    background: var(--page-bg);
+                    border-radius: var(--radius-md);
+                    border: 1px solid var(--card-border);
+                  "
+                >
+                  <div>
+                    <div style="font-size: 13px; font-weight: 600">
+                      Closet Duduk Standard
+                    </div>
+                    <div
+                      style="font-size: 11.5px; color: var(--text-secondary)"
+                    >
+                      Perlu: 8 Unit · PT Sanitasi Prima
+                    </div>
+                  </div>
+                  <button
+                    class="btn btn-wa btn-sm"
+                    onclick="
+                      openWAModal(
+                        'Closet Duduk Standard',
+                        'PT Sanitasi Prima',
+                        '+62 811-2233-4455',
+                        8,
+                        'Unit',
+                      )
+                    "
+                  >
+                    <i class="fa-brands fa-whatsapp"></i> Pesan
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- RINGKASAN STOK BY KATEGORI -->
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">
+                <i class="fa-solid fa-chart-pie"></i> Distribusi Stok Kategori
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="donut-wrap">
+                <svg width="110" height="110" viewBox="0 0 110 110">
+                  <circle
+                    cx="55"
+                    cy="55"
+                    r="42"
+                    fill="none"
+                    stroke="#E2E8F0"
+                    stroke-width="14"
+                  />
+                  <circle
+                    cx="55"
+                    cy="55"
+                    r="42"
+                    fill="none"
+                    stroke="var(--blue-500)"
+                    stroke-width="14"
+                    stroke-dasharray="80 184"
+                    stroke-dashoffset="0"
+                    stroke-linecap="round"
+                  />
+                  <circle
+                    cx="55"
+                    cy="55"
+                    r="42"
+                    fill="none"
+                    stroke="var(--green-500)"
+                    stroke-width="14"
+                    stroke-dasharray="46 218"
+                    stroke-dashoffset="-80"
+                    stroke-linecap="round"
+                  />
+                  <circle
+                    cx="55"
+                    cy="55"
+                    r="42"
+                    fill="none"
+                    stroke="var(--amber-500)"
+                    stroke-width="14"
+                    stroke-dasharray="35 229"
+                    stroke-dashoffset="-126"
+                    stroke-linecap="round"
+                  />
+                  <circle
+                    cx="55"
+                    cy="55"
+                    r="42"
+                    fill="none"
+                    stroke="var(--purple-500)"
+                    stroke-width="14"
+                    stroke-dasharray="23 241"
+                    stroke-dashoffset="-161"
+                    stroke-linecap="round"
+                  />
+                  <text
+                    x="55"
+                    y="51"
+                    text-anchor="middle"
+                    font-size="18"
+                    font-weight="800"
+                    fill="var(--text-primary)"
+                    font-family="Plus Jakarta Sans"
+                  >
+                    124
+                  </text>
+                  <text
+                    x="55"
+                    y="65"
+                    text-anchor="middle"
+                    font-size="10"
+                    fill="var(--text-muted)"
+                    font-family="Plus Jakarta Sans"
+                  >
+                    produk
+                  </text>
+                </svg>
+                <div class="donut-legend">
+                  <div class="legend-item">
+                    <div
+                      class="legend-dot"
+                      style="background: var(--blue-500)"
+                    ></div>
+                    <div class="legend-label">Keramik</div>
+                    <div class="legend-val">32</div>
+                  </div>
+                  <div class="legend-item">
+                    <div
+                      class="legend-dot"
+                      style="background: var(--green-500)"
+                    ></div>
+                    <div class="legend-label">Cat</div>
+                    <div class="legend-val">18</div>
+                  </div>
+                  <div class="legend-item">
+                    <div
+                      class="legend-dot"
+                      style="background: var(--amber-500)"
+                    ></div>
+                    <div class="legend-label">Pipa & Besi</div>
+                    <div class="legend-val">28</div>
+                  </div>
+                  <div class="legend-item">
+                    <div
+                      class="legend-dot"
+                      style="background: var(--purple-500)"
+                    ></div>
+                    <div class="legend-label">Sanitasi</div>
+                    <div class="legend-val">19</div>
+                  </div>
+                  <div class="legend-item">
+                    <div class="legend-dot" style="background: #e2e8f0"></div>
+                    <div class="legend-label">Lainnya</div>
+                    <div class="legend-val">27</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="divider"></div>
+
+              <div
+                style="
+                  font-size: 12.5px;
+                  color: var(--text-secondary);
+                  margin-bottom: 8px;
+                  font-weight: 600;
+                "
+              >
+                Pembelian 7 Hari Terakhir
+              </div>
+              <div class="bar-chart">
+                <div class="bar-col">
+                  <div class="bar-fill" style="height: 28px"></div>
+                  <div class="bar-label">Sen</div>
+                </div>
+                <div class="bar-col">
+                  <div class="bar-fill" style="height: 42px"></div>
+                  <div class="bar-label">Sel</div>
+                </div>
+                <div class="bar-col">
+                  <div class="bar-fill" style="height: 35px"></div>
+                  <div class="bar-label">Rab</div>
+                </div>
+                <div class="bar-col">
+                  <div class="bar-fill" style="height: 55px"></div>
+                  <div class="bar-label">Kam</div>
+                </div>
+                <div class="bar-col">
+                  <div class="bar-fill" style="height: 48px"></div>
+                  <div class="bar-label">Jum</div>
+                </div>
+                <div class="bar-col">
+                  <div
+                    class="bar-fill"
+                    style="height: 60px; background: var(--blue-700)"
+                  ></div>
+                  <div class="bar-label">Sab</div>
+                </div>
+                <div class="bar-col">
+                  <div
+                    class="bar-fill"
+                    style="height: 30px; background: var(--blue-200)"
+                  ></div>
+                  <div class="bar-label">Min</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- /page-dashboard -->
+
+      <!-- ═══ PAGE: INVENTORY ═══ -->
+      <div class="page content-wrapper" id="page-inventory">
+        <div class="section-header">
+          <div>
+            <div class="section-title">Inventory Monitoring</div>
+            <div class="section-sub">
+              Monitoring stok produk secara real-time
+            </div>
+          </div>
+          <div style="display: flex; gap: 8px">
+            <button class="btn btn-outline btn-sm">
+              <i class="fa-solid fa-download"></i> Export
+            </button>
+            <button class="btn btn-primary btn-sm" onclick="openAddProduct()">
+              <i class="fa-solid fa-plus"></i> Tambah Produk
+            </button>
+          </div>
+        </div>
+
+        <!-- STAT ROW -->
+        <div
+          style="
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin-bottom: 18px;
+          "
+        >
+          <div
+            style="
+              background: #fff;
+              border: 1px solid var(--card-border);
+              border-radius: var(--radius-md);
+              padding: 14px 16px;
+              box-shadow: var(--shadow-sm);
+            "
+          >
+            <div
+              style="
+                font-size: 11px;
+                font-weight: 700;
+                color: var(--text-muted);
+                text-transform: uppercase;
+                letter-spacing: 0.05em;
+                margin-bottom: 6px;
+              "
+            >
+              Semua Produk
+            </div>
+            <div
+              style="
+                font-size: 24px;
+                font-weight: 800;
+                color: var(--text-primary);
+              "
+            >
+              124
+            </div>
+          </div>
+          <div
+            style="
+              background: #fff;
+              border: 1px solid var(--card-border);
+              border-radius: var(--radius-md);
+              padding: 14px 16px;
+              box-shadow: var(--shadow-sm);
+              border-top: 3px solid var(--green-500);
+            "
+          >
+            <div
+              style="
+                font-size: 11px;
+                font-weight: 700;
+                color: var(--text-muted);
+                text-transform: uppercase;
+                letter-spacing: 0.05em;
+                margin-bottom: 6px;
+              "
+            >
+              Stok Aman
+            </div>
+            <div
+              style="font-size: 24px; font-weight: 800; color: var(--green-600)"
+            >
+              113
+            </div>
+          </div>
+          <div
+            style="
+              background: #fff;
+              border: 1px solid var(--card-border);
+              border-radius: var(--radius-md);
+              padding: 14px 16px;
+              box-shadow: var(--shadow-sm);
+              border-top: 3px solid var(--amber-500);
+            "
+          >
+            <div
+              style="
+                font-size: 11px;
+                font-weight: 700;
+                color: var(--text-muted);
+                text-transform: uppercase;
+                letter-spacing: 0.05em;
+                margin-bottom: 6px;
+              "
+            >
+              Menipis
+            </div>
+            <div
+              style="font-size: 24px; font-weight: 800; color: var(--amber-600)"
+            >
+              8
+            </div>
+          </div>
+          <div
+            style="
+              background: #fff;
+              border: 1px solid var(--card-border);
+              border-radius: var(--radius-md);
+              padding: 14px 16px;
+              box-shadow: var(--shadow-sm);
+              border-top: 3px solid var(--red-500);
+            "
+          >
+            <div
+              style="
+                font-size: 11px;
+                font-weight: 700;
+                color: var(--text-muted);
+                text-transform: uppercase;
+                letter-spacing: 0.05em;
+                margin-bottom: 6px;
+              "
+            >
+              Kritis
+            </div>
+            <div
+              style="font-size: 24px; font-weight: 800; color: var(--red-600)"
+            >
+              3
+            </div>
+          </div>
+        </div>
+
+        <!-- TOOLBAR -->
+        <div class="toolbar">
+          <div class="search-box" style="max-width: 320px">
+            <i class="fa-solid fa-search"></i>
+            <input
+              type="text"
+              placeholder="Cari produk, kode..."
+              id="invSearch"
+              oninput="filterInventory()"
+            />
+          </div>
+          <select id="invKategori" onchange="filterInventory()">
+            <option value="">Semua Kategori</option>
+            <option>Keramik</option>
+            <option>Cat</option>
+            <option>Pipa</option>
+            <option>Besi</option>
+            <option>Plafon</option>
+            <option>Keran</option>
+            <option>Closet</option>
+            <option>Alat Pertukangan</option>
+          </select>
+          <select id="invStatus" onchange="filterInventory()">
+            <option value="">Semua Status</option>
+            <option>Aman</option>
+            <option>Menipis</option>
+            <option>Kritis</option>
+          </select>
+          <button class="btn btn-outline btn-sm" onclick="resetFilter()">
+            <i class="fa-solid fa-rotate-left"></i> Reset
+          </button>
+        </div>
+
+        <!-- TABLE -->
+        <div class="card">
+          <div class="table-wrapper">
+            <table id="invTable">
+              <thead>
+                <tr>
+                  <th>Kode Produk</th>
+                  <th>Nama Produk</th>
+                  <th>Kategori</th>
+                  <th>Stok Saat Ini</th>
+                  <th>Stok Minimum</th>
+                  <th>Level Stok</th>
+                  <th>Status</th>
+                  <th>Supplier</th>
+                  <th>Aksi</th>
+                </tr>
+              </thead>
+              <tbody id="invTbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <!-- /page-inventory -->
+
+      <!-- ═══ PAGE: SUPPLIER ═══ -->
+      <div class="page content-wrapper" id="page-supplier">
+        <div class="section-header">
+          <div>
+            <div class="section-title">Supplier Management</div>
+            <div class="section-sub">Kelola data dan performa supplier</div>
+          </div>
+          <button class="btn btn-primary btn-sm" onclick="openAddSupplier()">
+            <i class="fa-solid fa-plus"></i> Tambah Supplier
+          </button>
+        </div>
+
+        <!-- TABS -->
+        <div style="margin-bottom: 16px">
+          <div class="tab-group" style="width: fit-content">
+            <button
+              class="tab active"
+              onclick="switchTab('tab-supplier-grid', this)"
+            >
+              Kartu Supplier
+            </button>
+            <button class="tab" onclick="switchTab('tab-supplier-table', this)">
+              Tabel Data
+            </button>
+            <button
+              class="tab"
+              onclick="switchTab('tab-supplier-comparison', this)"
+            >
+              Perbandingan
+            </button>
+          </div>
+        </div>
+
+        <!-- TAB: GRID -->
+        <div class="tab-content active" id="tab-supplier-grid">
+          <div class="supplier-grid" id="supplierGrid"></div>
+        </div>
+
+        <!-- TAB: TABLE -->
+        <div class="tab-content" id="tab-supplier-table">
+          <div class="card">
+            <div class="table-wrapper">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Nama Supplier</th>
+                    <th>Kontak</th>
+                    <th>WhatsApp</th>
+                    <th>Produk Disuplai</th>
+                    <th>Lead Time</th>
+                    <th>Rating</th>
+                    <th>Status</th>
+                    <th>Aksi</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>
+                      <div style="font-weight: 600">CV Mitra Keramik</div>
+                      <div class="text-xs text-muted">Bandung</div>
+                    </td>
+                    <td>Pak Hendra</td>
+                    <td><span class="td-code">+62 812-3456-7890</span></td>
+                    <td><span class="tag">Keramik</span></td>
+                    <td>2-3 hari</td>
+                    <td>⭐ 4.6</td>
+                    <td><span class="badge badge-aktif">Aktif</span></td>
+                    <td>
+                      <div class="action-group">
+                        <button
+                          class="btn btn-wa btn-xs"
+                          onclick="
+                            openWAModal(
+                              'Keramik Putih 40x40',
+                              'CV Mitra Keramik',
+                              '+62 812-3456-7890',
+                              50,
+                              'Dus',
+                            )
+                          "
+                        >
+                          <i class="fa-brands fa-whatsapp"></i>
+                        </button>
+                        <button class="btn btn-outline btn-xs">
+                          <i class="fa-solid fa-pen"></i>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div style="font-weight: 600">UD Warna Jaya</div>
+                      <div class="text-xs text-muted">Cikampek</div>
+                    </td>
+                    <td>Bu Rina</td>
+                    <td><span class="td-code">+62 821-9988-7766</span></td>
+                    <td><span class="tag">Cat</span></td>
+                    <td>1-2 hari</td>
+                    <td>⭐ 3.9</td>
+                    <td><span class="badge badge-aktif">Aktif</span></td>
+                    <td>
+                      <div class="action-group">
+                        <button
+                          class="btn btn-wa btn-xs"
+                          onclick="
+                            openWAModal(
+                              'Cat Tembok Putih 25kg',
+                              'UD Warna Jaya',
+                              '+62 821-9988-7766',
+                              20,
+                              'Kaleng',
+                            )
+                          "
+                        >
+                          <i class="fa-brands fa-whatsapp"></i>
+                        </button>
+                        <button class="btn btn-outline btn-xs">
+                          <i class="fa-solid fa-pen"></i>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div style="font-weight: 600">PT Sanitasi Prima</div>
+                      <div class="text-xs text-muted">Jakarta</div>
+                    </td>
+                    <td>Pak Budi</td>
+                    <td><span class="td-code">+62 811-2233-4455</span></td>
+                    <td>
+                      <span class="tag">Closet</span>
+                      <span class="tag">Keran</span>
+                    </td>
+                    <td>3-5 hari</td>
+                    <td>⭐ 4.2</td>
+                    <td><span class="badge badge-aktif">Aktif</span></td>
+                    <td>
+                      <div class="action-group">
+                        <button
+                          class="btn btn-wa btn-xs"
+                          onclick="
+                            openWAModal(
+                              'Closet Duduk Standard',
+                              'PT Sanitasi Prima',
+                              '+62 811-2233-4455',
+                              8,
+                              'Unit',
+                            )
+                          "
+                        >
+                          <i class="fa-brands fa-whatsapp"></i>
+                        </button>
+                        <button class="btn btn-outline btn-xs">
+                          <i class="fa-solid fa-pen"></i>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div style="font-weight: 600">Toko Plastik Sentosa</div>
+                      <div class="text-xs text-muted">Karawang</div>
+                    </td>
+                    <td>Pak Agus</td>
+                    <td><span class="td-code">+62 856-1122-3344</span></td>
+                    <td><span class="tag">Pipa</span></td>
+                    <td>2-4 hari</td>
+                    <td>⭐ 3.2</td>
+                    <td><span class="badge badge-aktif">Aktif</span></td>
+                    <td>
+                      <div class="action-group">
+                        <button
+                          class="btn btn-wa btn-xs"
+                          onclick="
+                            openWAModal(
+                              'Pipa PVC 4 Inch',
+                              'Toko Plastik Sentosa',
+                              '+62 856-1122-3344',
+                              50,
+                              'Batang',
+                            )
+                          "
+                        >
+                          <i class="fa-brands fa-whatsapp"></i>
+                        </button>
+                        <button class="btn btn-outline btn-xs">
+                          <i class="fa-solid fa-pen"></i>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div style="font-weight: 600">CV Besi Mandiri</div>
+                      <div class="text-xs text-muted">Bekasi</div>
+                    </td>
+                    <td>Pak Joko</td>
+                    <td><span class="td-code">+62 877-5566-7788</span></td>
+                    <td><span class="tag">Besi</span></td>
+                    <td>3-5 hari</td>
+                    <td>⭐ 2.8</td>
+                    <td>
+                      <span
+                        class="badge badge-menipis"
+                        style="background: #fff7ed; color: #c2410c"
+                        >Evaluasi</span
+                      >
+                    </td>
+                    <td>
+                      <div class="action-group">
+                        <button
+                          class="btn btn-wa btn-xs"
+                          onclick="
+                            openWAModal(
+                              'Besi Hollow 4x4',
+                              'CV Besi Mandiri',
+                              '+62 877-5566-7788',
+                              40,
+                              'Batang',
+                            )
+                          "
+                        >
+                          <i class="fa-brands fa-whatsapp"></i>
+                        </button>
+                        <button class="btn btn-outline btn-xs">
+                          <i class="fa-solid fa-pen"></i>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB: COMPARISON -->
+        <div class="tab-content" id="tab-supplier-comparison">
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">
+                <i class="fa-solid fa-scale-balanced"></i> Kriteria Pemilihan
+                Supplier
+              </div>
+              <div class="text-sm text-muted">
+                Berdasarkan: Harga · Kualitas · Lead Time
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="table-wrapper">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Supplier</th>
+                      <th>Harga (1-5)</th>
+                      <th>Kualitas (1-5)</th>
+                      <th>Lead Time (1-5)</th>
+                      <th>Ketepatan (1-5)</th>
+                      <th>Total Skor</th>
+                      <th>Rekomendasi</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td style="font-weight: 700">CV Mitra Keramik</td>
+                      <td>
+                        <div
+                          style="display: flex; align-items: center; gap: 6px"
+                        >
+                          <div
+                            style="height:5px;width:${4/5*80}px;background:var(--blue-500);border-radius:5px;min-width:64px"
+                          ></div>
+                          <span style="font-size: 12px; font-weight: 700"
+                            >4</span
+                          >
+                        </div>
+                      </td>
+                      <td>
+                        <div
+                          style="display: flex; align-items: center; gap: 6px"
+                        >
+                          <div
+                            style="
+                              height: 5px;
+                              width: 80px;
+                              background: var(--green-500);
+                              border-radius: 5px;
+                            "
+                          ></div>
+                          <span style="font-size: 12px; font-weight: 700"
+                            >5</span
+                          >
+                        </div>
+                      </td>
+                      <td>
+                        <div
+                          style="display: flex; align-items: center; gap: 6px"
+                        >
+                          <div
+                            style="
+                              height: 5px;
+                              width: 64px;
+                              background: var(--blue-500);
+                              border-radius: 5px;
+                            "
+                          ></div>
+                          <span style="font-size: 12px; font-weight: 700"
+                            >4</span
+                          >
+                        </div>
+                      </td>
+                      <td>
+                        <div
+                          style="display: flex; align-items: center; gap: 6px"
+                        >
+                          <div
+                            style="
+                              height: 5px;
+                              width: 80px;
+                              background: var(--green-500);
+                              border-radius: 5px;
+                            "
+                          ></div>
+                          <span style="font-size: 12px; font-weight: 700"
+                            >5</span
+                          >
+                        </div>
+                      </td>
+                      <td
+                        style="
+                          font-size: 16px;
+                          font-weight: 800;
+                          color: var(--green-600);
+                        "
+                      >
+                        18/20
+                      </td>
+                      <td>
+                        <span class="badge badge-aman"
+                          ><i
+                            class="fa-solid fa-crown"
+                            style="font-size: 10px"
+                          ></i>
+                          Terbaik</span
+                        >
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="font-weight: 700">PT Sanitasi Prima</td>
+                      <td>
+                        <div
+                          style="display: flex; align-items: center; gap: 6px"
+                        >
+                          <div
+                            style="
+                              height: 5px;
+                              width: 48px;
+                              background: var(--blue-500);
+                              border-radius: 5px;
+                            "
+                          ></div>
+                          <span style="font-size: 12px; font-weight: 700"
+                            >3</span
+                          >
+                        </div>
+                      </td>
+                      <td>
+                        <div
+                          style="display: flex; align-items: center; gap: 6px"
+                        >
+                          <div
+                            style="
+                              height: 5px;
+                              width: 64px;
+                              background: var(--green-500);
+                              border-radius: 5px;
+                            "
+                          ></div>
+                          <span style="font-size: 12px; font-weight: 700"
+                            >4</span
+                          >
+                        </div>
+                      </td>
+                      <td>
+                        <div
+                          style="display: flex; align-items: center; gap: 6px"
+                        >
+                          <div
+                            style="
+                              height: 5px;
+                              width: 48px;
+                              background: var(--amber-500);
+                              border-radius: 5px;
+                            "
+                          ></div>
+                          <span style="font-size: 12px; font-weight: 700"
+                            >3</span
+                          >
+                        </div>
+                      </td>
+                      <td>
+                        <div
+                          style="display: flex; align-items: center; gap: 6px"
+                        >
+                          <div
+                            style="
+                              height: 5px;
+                              width: 64px;
+                              background: var(--blue-500);
+                              border-radius: 5px;
+                            "
+                          ></div>
+                          <span style="font-size: 12px; font-weight: 700"
+                            >4</span
+                          >
+                        </div>
+                      </td>
+                      <td
+                        style="
+                          font-size: 16px;
+                          font-weight: 800;
+                          color: var(--blue-600);
+                        "
+                      >
+                        14/20
+                      </td>
+                      <td><span class="badge badge-dipesan">Baik</span></td>
+                    </tr>
+                    <tr>
+                      <td style="font-weight: 700">UD Warna Jaya</td>
+                      <td>
+                        <div
+                          style="display: flex; align-items: center; gap: 6px"
+                        >
+                          <div
+                            style="
+                              height: 5px;
+                              width: 64px;
+                              background: var(--blue-500);
+                              border-radius: 5px;
+                            "
+                          ></div>
+                          <span style="font-size: 12px; font-weight: 700"
+                            >4</span
+                          >
+                        </div>
+                      </td>
+                      <td>
+                        <div
+                          style="display: flex; align-items: center; gap: 6px"
+                        >
+                          <div
+                            style="
+                              height: 5px;
+                              width: 48px;
+                              background: var(--amber-500);
+                              border-radius: 5px;
+                            "
+                          ></div>
+                          <span style="font-size: 12px; font-weight: 700"
+                            >3</span
+                          >
+                        </div>
+                      </td>
+                      <td>
+                        <div
+                          style="display: flex; align-items: center; gap: 6px"
+                        >
+                          <div
+                            style="
+                              height: 5px;
+                              width: 64px;
+                              background: var(--blue-500);
+                              border-radius: 5px;
+                            "
+                          ></div>
+                          <span style="font-size: 12px; font-weight: 700"
+                            >4</span
+                          >
+                        </div>
+                      </td>
+                      <td>
+                        <div
+                          style="display: flex; align-items: center; gap: 6px"
+                        >
+                          <div
+                            style="
+                              height: 5px;
+                              width: 48px;
+                              background: var(--amber-500);
+                              border-radius: 5px;
+                            "
+                          ></div>
+                          <span style="font-size: 12px; font-weight: 700"
+                            >3</span
+                          >
+                        </div>
+                      </td>
+                      <td
+                        style="
+                          font-size: 16px;
+                          font-weight: 800;
+                          color: var(--blue-600);
+                        "
+                      >
+                        14/20
+                      </td>
+                      <td><span class="badge badge-dipesan">Baik</span></td>
+                    </tr>
+                    <tr>
+                      <td style="font-weight: 700">Toko Plastik Sentosa</td>
+                      <td>
+                        <div
+                          style="display: flex; align-items: center; gap: 6px"
+                        >
+                          <div
+                            style="
+                              height: 5px;
+                              width: 48px;
+                              background: var(--blue-500);
+                              border-radius: 5px;
+                            "
+                          ></div>
+                          <span style="font-size: 12px; font-weight: 700"
+                            >3</span
+                          >
+                        </div>
+                      </td>
+                      <td>
+                        <div
+                          style="display: flex; align-items: center; gap: 6px"
+                        >
+                          <div
+                            style="
+                              height: 5px;
+                              width: 48px;
+                              background: var(--amber-500);
+                              border-radius: 5px;
+                            "
+                          ></div>
+                          <span style="font-size: 12px; font-weight: 700"
+                            >3</span
+                          >
+                        </div>
+                      </td>
+                      <td>
+                        <div
+                          style="display: flex; align-items: center; gap: 6px"
+                        >
+                          <div
+                            style="
+                              height: 5px;
+                              width: 32px;
+                              background: var(--amber-500);
+                              border-radius: 5px;
+                            "
+                          ></div>
+                          <span style="font-size: 12px; font-weight: 700"
+                            >2</span
+                          >
+                        </div>
+                      </td>
+                      <td>
+                        <div
+                          style="display: flex; align-items: center; gap: 6px"
+                        >
+                          <div
+                            style="
+                              height: 5px;
+                              width: 32px;
+                              background: var(--amber-500);
+                              border-radius: 5px;
+                            "
+                          ></div>
+                          <span style="font-size: 12px; font-weight: 700"
+                            >2</span
+                          >
+                        </div>
+                      </td>
+                      <td
+                        style="
+                          font-size: 16px;
+                          font-weight: 800;
+                          color: var(--amber-600);
+                        "
+                      >
+                        10/20
+                      </td>
+                      <td><span class="badge badge-menipis">Cukup</span></td>
+                    </tr>
+                    <tr>
+                      <td style="font-weight: 700">CV Besi Mandiri</td>
+                      <td>
+                        <div
+                          style="display: flex; align-items: center; gap: 6px"
+                        >
+                          <div
+                            style="
+                              height: 5px;
+                              width: 32px;
+                              background: var(--red-400);
+                              border-radius: 5px;
+                            "
+                          ></div>
+                          <span style="font-size: 12px; font-weight: 700"
+                            >2</span
+                          >
+                        </div>
+                      </td>
+                      <td>
+                        <div
+                          style="display: flex; align-items: center; gap: 6px"
+                        >
+                          <div
+                            style="
+                              height: 5px;
+                              width: 32px;
+                              background: var(--red-400);
+                              border-radius: 5px;
+                            "
+                          ></div>
+                          <span style="font-size: 12px; font-weight: 700"
+                            >2</span
+                          >
+                        </div>
+                      </td>
+                      <td>
+                        <div
+                          style="display: flex; align-items: center; gap: 6px"
+                        >
+                          <div
+                            style="
+                              height: 5px;
+                              width: 32px;
+                              background: var(--red-400);
+                              border-radius: 5px;
+                            "
+                          ></div>
+                          <span style="font-size: 12px; font-weight: 700"
+                            >2</span
+                          >
+                        </div>
+                      </td>
+                      <td>
+                        <div
+                          style="display: flex; align-items: center; gap: 6px"
+                        >
+                          <div
+                            style="
+                              height: 5px;
+                              width: 16px;
+                              background: var(--red-500);
+                              border-radius: 5px;
+                            "
+                          ></div>
+                          <span style="font-size: 12px; font-weight: 700"
+                            >1</span
+                          >
+                        </div>
+                      </td>
+                      <td
+                        style="
+                          font-size: 16px;
+                          font-weight: 800;
+                          color: var(--red-600);
+                        "
+                      >
+                        7/20
+                      </td>
+                      <td>
+                        <span class="badge badge-kritis">Perlu Evaluasi</span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- /page-supplier -->
+
+      <!-- ═══ PAGE: PROCUREMENT ═══ -->
+      <div class="page content-wrapper" id="page-procurement">
+        <div class="section-header">
+          <div>
+            <div class="section-title">Procurement Monitoring</div>
+            <div class="section-sub">
+              Pemantauan pemesanan dan pengadaan barang
+            </div>
+          </div>
+          <button class="btn btn-primary btn-sm" onclick="openAddPO()">
+            <i class="fa-solid fa-plus"></i> Buat PO Baru
+          </button>
+        </div>
+
+        <!-- STATUS CARDS -->
+        <div
+          style="
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 14px;
+            margin-bottom: 18px;
+          "
+        >
+          <div
+            style="
+              background: #fff;
+              border: 1px solid var(--card-border);
+              border-radius: var(--radius-lg);
+              padding: 16px 18px;
+              box-shadow: var(--shadow-sm);
+            "
+          >
+            <div
+              style="
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                margin-bottom: 10px;
+              "
+            >
+              <div
+                style="
+                  font-size: 12px;
+                  font-weight: 700;
+                  color: var(--text-muted);
+                  text-transform: uppercase;
+                  letter-spacing: 0.05em;
+                "
+              >
+                Dipesan
+              </div>
+              <div
+                style="
+                  width: 32px;
+                  height: 32px;
+                  background: var(--blue-50);
+                  border-radius: var(--radius-sm);
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  color: var(--blue-600);
+                  font-size: 15px;
+                "
+              >
+                <i class="fa-solid fa-paper-plane"></i>
+              </div>
+            </div>
+            <div
+              style="font-size: 26px; font-weight: 800; color: var(--blue-600)"
+            >
+              2
+            </div>
+            <div
+              style="
+                font-size: 12px;
+                color: var(--text-secondary);
+                margin-top: 3px;
+              "
+            >
+              PO aktif menunggu supplier
+            </div>
+          </div>
+          <div
+            style="
+              background: #fff;
+              border: 1px solid var(--card-border);
+              border-radius: var(--radius-lg);
+              padding: 16px 18px;
+              box-shadow: var(--shadow-sm);
+            "
+          >
+            <div
+              style="
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                margin-bottom: 10px;
+              "
+            >
+              <div
+                style="
+                  font-size: 12px;
+                  font-weight: 700;
+                  color: var(--text-muted);
+                  text-transform: uppercase;
+                  letter-spacing: 0.05em;
+                "
+              >
+                Diproses
+              </div>
+              <div
+                style="
+                  width: 32px;
+                  height: 32px;
+                  background: var(--purple-50);
+                  border-radius: var(--radius-sm);
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  color: var(--purple-600);
+                  font-size: 15px;
+                "
+              >
+                <i class="fa-solid fa-gears"></i>
+              </div>
+            </div>
+            <div
+              style="
+                font-size: 26px;
+                font-weight: 800;
+                color: var(--purple-600);
+              "
+            >
+              3
+            </div>
+            <div
+              style="
+                font-size: 12px;
+                color: var(--text-secondary);
+                margin-top: 3px;
+              "
+            >
+              Sedang diproses supplier
+            </div>
+          </div>
+          <div
+            style="
+              background: #fff;
+              border: 1px solid var(--card-border);
+              border-radius: var(--radius-lg);
+              padding: 16px 18px;
+              box-shadow: var(--shadow-sm);
+            "
+          >
+            <div
+              style="
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                margin-bottom: 10px;
+              "
+            >
+              <div
+                style="
+                  font-size: 12px;
+                  font-weight: 700;
+                  color: var(--text-muted);
+                  text-transform: uppercase;
+                  letter-spacing: 0.05em;
+                "
+              >
+                Diterima bulan ini
+              </div>
+              <div
+                style="
+                  width: 32px;
+                  height: 32px;
+                  background: var(--green-50);
+                  border-radius: var(--radius-sm);
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  color: var(--green-600);
+                  font-size: 15px;
+                "
+              >
+                <i class="fa-solid fa-check-double"></i>
+              </div>
+            </div>
+            <div
+              style="font-size: 26px; font-weight: 800; color: var(--green-600)"
+            >
+              18
+            </div>
+            <div
+              style="
+                font-size: 12px;
+                color: var(--text-secondary);
+                margin-top: 3px;
+              "
+            >
+              PO selesai bulan ini
+            </div>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <!-- ACTIVE PO -->
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">
+                <i class="fa-solid fa-paper-plane"></i> PO Aktif
+              </div>
+              <span class="badge badge-dipesan">2 Pending</span>
+            </div>
+            <div class="card-body">
+              <div
+                style="
+                  background: var(--blue-50);
+                  border: 1px solid var(--blue-200);
+                  border-radius: var(--radius-md);
+                  padding: 14px;
+                  margin-bottom: 12px;
+                "
+              >
+                <div
+                  style="
+                    display: flex;
+                    align-items: flex-start;
+                    justify-content: space-between;
+                    margin-bottom: 10px;
+                  "
+                >
+                  <div>
+                    <div style="font-size: 13px; font-weight: 700">
+                      PO-2024-0047
+                    </div>
+                    <div
+                      style="
+                        font-size: 12px;
+                        color: var(--text-secondary);
+                        margin-top: 2px;
+                      "
+                    >
+                      CV Mitra Keramik · 12 Jan 2024
+                    </div>
+                  </div>
+                  <span class="badge badge-dipesan">Dipesan</span>
+                </div>
+                <div
+                  style="
+                    background: #fff;
+                    border-radius: var(--radius-sm);
+                    padding: 10px;
+                    margin-bottom: 10px;
+                    font-size: 13px;
+                  "
+                >
+                  <div
+                    style="
+                      display: flex;
+                      justify-content: space-between;
+                      margin-bottom: 4px;
+                    "
+                  >
+                    <span style="color: var(--text-secondary)"
+                      >Keramik Granit 60x60 Abu-abu</span
+                    ><strong>30 Dus</strong>
+                  </div>
+                  <div style="display: flex; justify-content: space-between">
+                    <span style="color: var(--text-secondary)"
+                      >Keramik Putih 40x40</span
+                    ><strong>50 Dus</strong>
+                  </div>
+                </div>
+                <div style="display: flex; gap: 8px">
+                  <button
+                    class="btn btn-outline btn-sm flex-1"
+                    onclick="updatePOStatus('PO-2024-0047', 'Diproses')"
+                  >
+                    <i class="fa-solid fa-gears"></i> Update Status
+                  </button>
+                  <button
+                    class="btn btn-wa btn-sm"
+                    onclick="
+                      openWAModal(
+                        'Keramik Granit 60x60 Abu-abu',
+                        'CV Mitra Keramik',
+                        '+62 812-3456-7890',
+                        30,
+                        'Dus',
+                      )
+                    "
+                  >
+                    <i class="fa-brands fa-whatsapp"></i> Follow Up
+                  </button>
+                </div>
+              </div>
+
+              <div
+                style="
+                  background: var(--page-bg);
+                  border: 1px solid var(--card-border);
+                  border-radius: var(--radius-md);
+                  padding: 14px;
+                "
+              >
+                <div
+                  style="
+                    display: flex;
+                    align-items: flex-start;
+                    justify-content: space-between;
+                    margin-bottom: 10px;
+                  "
+                >
+                  <div>
+                    <div style="font-size: 13px; font-weight: 700">
+                      PO-2024-0046
+                    </div>
+                    <div
+                      style="
+                        font-size: 12px;
+                        color: var(--text-secondary);
+                        margin-top: 2px;
+                      "
+                    >
+                      UD Warna Jaya · 11 Jan 2024
+                    </div>
+                  </div>
+                  <span class="badge badge-dipesan">Dipesan</span>
+                </div>
+                <div
+                  style="
+                    background: #fff;
+                    border-radius: var(--radius-sm);
+                    padding: 10px;
+                    margin-bottom: 10px;
+                    font-size: 13px;
+                  "
+                >
+                  <div style="display: flex; justify-content: space-between">
+                    <span style="color: var(--text-secondary)"
+                      >Cat Tembok Putih 25kg</span
+                    ><strong>20 Kaleng</strong>
+                  </div>
+                </div>
+                <div style="display: flex; gap: 8px">
+                  <button
+                    class="btn btn-outline btn-sm flex-1"
+                    onclick="updatePOStatus('PO-2024-0046', 'Diproses')"
+                  >
+                    <i class="fa-solid fa-gears"></i> Update Status
+                  </button>
+                  <button
+                    class="btn btn-wa btn-sm"
+                    onclick="
+                      openWAModal(
+                        'Cat Tembok Putih 25kg',
+                        'UD Warna Jaya',
+                        '+62 821-9988-7766',
+                        20,
+                        'Kaleng',
+                      )
+                    "
+                  >
+                    <i class="fa-brands fa-whatsapp"></i> Follow Up
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- RIWAYAT PEMBELIAN -->
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">
+                <i class="fa-solid fa-clock-rotate-left"></i> Riwayat Pembelian
+              </div>
+              <button class="btn btn-outline btn-sm">Lihat Semua</button>
+            </div>
+            <div class="card-body" style="padding-top: 12px">
+              <div class="timeline">
+                <div class="timeline-item">
+                  <div
+                    class="timeline-dot"
+                    style="background: var(--green-500)"
+                  ></div>
+                  <div class="tl-date">10 Jan 2024 · PO-2024-0045</div>
+                  <div class="tl-title">Closet Duduk Standard — 8 Unit</div>
+                  <div class="tl-sub">
+                    PT Sanitasi Prima ·
+                    <span
+                      class="badge badge-diterima"
+                      style="font-size: 10.5px; padding: 1px 7px"
+                      >Diterima</span
+                    >
+                  </div>
+                </div>
+
+                <div class="timeline-item">
+                  <div
+                    class="timeline-dot"
+                    style="background: var(--green-500)"
+                  ></div>
+                  <div class="tl-date">9 Jan 2024 · PO-2024-0044</div>
+                  <div class="tl-title">Pipa PVC 4" — 50 Batang</div>
+                  <div class="tl-sub">
+                    Toko Plastik Sentosa ·
+                    <span
+                      class="badge badge-diterima"
+                      style="font-size: 10.5px; padding: 1px 7px"
+                      >Diterima</span
+                    >
+                  </div>
+                </div>
+
+                <div class="timeline-item">
+                  <div
+                    class="timeline-dot"
+                    style="background: var(--purple-500)"
+                  ></div>
+                  <div class="tl-date">8 Jan 2024 · PO-2024-0043</div>
+                  <div class="tl-title">Besi Hollow 4x4 — 40 Batang</div>
+                  <div class="tl-sub">
+                    CV Besi Mandiri ·
+                    <span
+                      class="badge badge-diproses"
+                      style="font-size: 10.5px; padding: 1px 7px"
+                      >Diproses</span
+                    >
+                  </div>
+                </div>
+
+                <div class="timeline-item">
+                  <div
+                    class="timeline-dot"
+                    style="background: var(--green-500)"
+                  ></div>
+                  <div class="tl-date">7 Jan 2024 · PO-2024-0042</div>
+                  <div class="tl-title">Keramik Motif Marmer — 25 Dus</div>
+                  <div class="tl-sub">
+                    CV Mitra Keramik ·
+                    <span
+                      class="badge badge-diterima"
+                      style="font-size: 10.5px; padding: 1px 7px"
+                      >Diterima</span
+                    >
+                  </div>
+                </div>
+
+                <div class="timeline-item">
+                  <div
+                    class="timeline-dot"
+                    style="background: var(--green-500)"
+                  ></div>
+                  <div class="tl-date">5 Jan 2024 · PO-2024-0041</div>
+                  <div class="tl-title">Plafon PVC 4m — 30 Lembar</div>
+                  <div class="tl-sub">
+                    Toko Material Jaya ·
+                    <span
+                      class="badge badge-diterima"
+                      style="font-size: 10.5px; padding: 1px 7px"
+                      >Diterima</span
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- BARANG PERLU DIPESAN -->
+        <div class="card mt-16">
+          <div class="card-header">
+            <div class="card-title">
+              <i class="fa-solid fa-list-check"></i> Barang yang Perlu Dipesan
+            </div>
+            <button class="btn btn-primary btn-sm" onclick="createBatchPO()">
+              <i class="fa-solid fa-cart-shopping"></i> Buat PO Batch
+            </button>
+          </div>
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>
+                    <input
+                      type="checkbox"
+                      id="checkAll"
+                      onchange="toggleAllCheck()"
+                    />
+                  </th>
+                  <th>Produk</th>
+                  <th>Kategori</th>
+                  <th>Stok Saat Ini</th>
+                  <th>Kebutuhan</th>
+                  <th>Supplier</th>
+                  <th>Prioritas</th>
+                  <th>Aksi</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="highlight-kritis">
+                  <td><input type="checkbox" class="po-check" checked /></td>
+                  <td style="font-weight: 600">Keramik Granit 60x60 Abu-abu</td>
+                  <td><span class="tag">Keramik</span></td>
+                  <td style="color: var(--red-600); font-weight: 700">5 Dus</td>
+                  <td style="font-weight: 600">30 Dus</td>
+                  <td>CV Mitra Keramik</td>
+                  <td><span class="badge badge-kritis">Kritis</span></td>
+                  <td>
+                    <button
+                      class="btn btn-wa btn-xs"
+                      onclick="
+                        openWAModal(
+                          'Keramik Granit 60x60 Abu-abu',
+                          'CV Mitra Keramik',
+                          '+62 812-3456-7890',
+                          30,
+                          'Dus',
+                        )
+                      "
+                    >
+                      <i class="fa-brands fa-whatsapp"></i> Pesan
+                    </button>
+                  </td>
+                </tr>
+                <tr class="highlight-kritis">
+                  <td><input type="checkbox" class="po-check" checked /></td>
+                  <td style="font-weight: 600">Cat Tembok Putih 25kg</td>
+                  <td><span class="tag">Cat</span></td>
+                  <td style="color: var(--red-600); font-weight: 700">
+                    2 Kaleng
+                  </td>
+                  <td style="font-weight: 600">20 Kaleng</td>
+                  <td>UD Warna Jaya</td>
+                  <td><span class="badge badge-kritis">Kritis</span></td>
+                  <td>
+                    <button
+                      class="btn btn-wa btn-xs"
+                      onclick="
+                        openWAModal(
+                          'Cat Tembok Putih 25kg',
+                          'UD Warna Jaya',
+                          '+62 821-9988-7766',
+                          20,
+                          'Kaleng',
+                        )
+                      "
+                    >
+                      <i class="fa-brands fa-whatsapp"></i> Pesan
+                    </button>
+                  </td>
+                </tr>
+                <tr class="highlight-kritis">
+                  <td><input type="checkbox" class="po-check" /></td>
+                  <td style="font-weight: 600">Closet Duduk Standard</td>
+                  <td><span class="tag">Sanitasi</span></td>
+                  <td style="color: var(--red-600); font-weight: 700">
+                    1 Unit
+                  </td>
+                  <td style="font-weight: 600">8 Unit</td>
+                  <td>PT Sanitasi Prima</td>
+                  <td><span class="badge badge-kritis">Kritis</span></td>
+                  <td>
+                    <button
+                      class="btn btn-wa btn-xs"
+                      onclick="
+                        openWAModal(
+                          'Closet Duduk Standard',
+                          'PT Sanitasi Prima',
+                          '+62 811-2233-4455',
+                          8,
+                          'Unit',
+                        )
+                      "
+                    >
+                      <i class="fa-brands fa-whatsapp"></i> Pesan
+                    </button>
+                  </td>
+                </tr>
+                <tr class="highlight-menipis">
+                  <td><input type="checkbox" class="po-check" /></td>
+                  <td style="font-weight: 600">Pipa PVC 4"</td>
+                  <td><span class="tag">Pipa</span></td>
+                  <td style="color: var(--amber-600); font-weight: 700">
+                    12 Batang
+                  </td>
+                  <td style="font-weight: 600">50 Batang</td>
+                  <td>Toko Plastik Sentosa</td>
+                  <td><span class="badge badge-menipis">Menipis</span></td>
+                  <td>
+                    <button
+                      class="btn btn-wa btn-xs"
+                      onclick="
+                        openWAModal(
+                          'Pipa PVC 4 Inch',
+                          'Toko Plastik Sentosa',
+                          '+62 856-1122-3344',
+                          50,
+                          'Batang',
+                        )
+                      "
+                    >
+                      <i class="fa-brands fa-whatsapp"></i> Pesan
+                    </button>
+                  </td>
+                </tr>
+                <tr class="highlight-menipis">
+                  <td><input type="checkbox" class="po-check" /></td>
+                  <td style="font-weight: 600">Besi Hollow 4x4</td>
+                  <td><span class="tag">Besi</span></td>
+                  <td style="color: var(--amber-600); font-weight: 700">
+                    8 Batang
+                  </td>
+                  <td style="font-weight: 600">40 Batang</td>
+                  <td>CV Besi Mandiri</td>
+                  <td><span class="badge badge-menipis">Menipis</span></td>
+                  <td>
+                    <button
+                      class="btn btn-wa btn-xs"
+                      onclick="
+                        openWAModal(
+                          'Besi Hollow 4x4',
+                          'CV Besi Mandiri',
+                          '+62 877-5566-7788',
+                          40,
+                          'Batang',
+                        )
+                      "
+                    >
+                      <i class="fa-brands fa-whatsapp"></i> Pesan
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <!-- /page-procurement -->
+
+      <!-- ═══ PAGE: REPORTS ═══ -->
+      <div class="page content-wrapper" id="page-reports">
+        <div class="section-header">
+          <div>
+            <div class="section-title">Reports & Analytics</div>
+            <div class="section-sub">
+              Laporan stok, pembelian, dan performa supplier
+            </div>
+          </div>
+          <div style="display: flex; gap: 8px; align-items: center">
+            <select style="font-size: 13px">
+              <option>Januari 2024</option>
+              <option>Desember 2023</option>
+              <option>November 2023</option>
+            </select>
+            <button class="btn btn-primary btn-sm">
+              <i class="fa-solid fa-download"></i> Export PDF
+            </button>
+          </div>
+        </div>
+
+        <!-- REPORT CARDS -->
+        <div
+          style="
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 14px;
+            margin-bottom: 22px;
+          "
+        >
+          <div class="report-card" onclick="showReportDetail('stok')">
+            <div
+              class="report-icon"
+              style="background: var(--blue-50); color: var(--blue-600)"
+            >
+              <i class="fa-solid fa-boxes-stacked"></i>
+            </div>
+            <div>
+              <div class="report-title">Laporan Stok</div>
+              <div class="report-desc">
+                Kondisi stok semua produk per tanggal
+              </div>
+            </div>
+            <i
+              class="fa-solid fa-chevron-right"
+              style="
+                margin-left: auto;
+                color: var(--text-muted);
+                font-size: 13px;
+              "
+            ></i>
+          </div>
+          <div class="report-card" onclick="showReportDetail('pembelian')">
+            <div
+              class="report-icon"
+              style="background: var(--green-50); color: var(--green-600)"
+            >
+              <i class="fa-solid fa-cart-shopping"></i>
+            </div>
+            <div>
+              <div class="report-title">Laporan Pembelian</div>
+              <div class="report-desc">Riwayat dan nilai total pembelian</div>
+            </div>
+            <i
+              class="fa-solid fa-chevron-right"
+              style="
+                margin-left: auto;
+                color: var(--text-muted);
+                font-size: 13px;
+              "
+            ></i>
+          </div>
+          <div class="report-card" onclick="showReportDetail('supplier')">
+            <div
+              class="report-icon"
+              style="background: var(--amber-50); color: var(--amber-600)"
+            >
+              <i class="fa-solid fa-truck"></i>
+            </div>
+            <div>
+              <div class="report-title">Laporan Supplier</div>
+              <div class="report-desc">
+                Evaluasi performa dan ketepatan waktu
+              </div>
+            </div>
+            <i
+              class="fa-solid fa-chevron-right"
+              style="
+                margin-left: auto;
+                color: var(--text-muted);
+                font-size: 13px;
+              "
+            ></i>
+          </div>
+        </div>
+
+        <!-- MAIN REPORT AREA -->
+        <div id="reportDetailArea">
+          <div class="grid-2" style="margin-bottom: 16px">
+            <!-- STOCK SUMMARY CHART -->
+            <div class="card">
+              <div class="card-header">
+                <div class="card-title">
+                  <i class="fa-solid fa-chart-bar"></i> Ringkasan Stok per
+                  Kategori
+                </div>
+              </div>
+              <div class="card-body">
+                <div style="display: flex; flex-direction: column; gap: 10px">
+                  <div>
+                    <div
+                      style="
+                        display: flex;
+                        justify-content: space-between;
+                        margin-bottom: 4px;
+                        font-size: 12.5px;
+                      "
+                    >
+                      <span style="font-weight: 600">Keramik</span>
+                      <span style="color: var(--text-secondary)"
+                        >32 produk · 78% aman</span
+                      >
+                    </div>
+                    <div
+                      style="
+                        height: 8px;
+                        background: #e2e8f0;
+                        border-radius: 10px;
+                        overflow: hidden;
+                      "
+                    >
+                      <div
+                        style="
+                          width: 78%;
+                          height: 100%;
+                          background: var(--blue-500);
+                          border-radius: 10px;
+                        "
+                      ></div>
+                    </div>
+                  </div>
+                  <div>
+                    <div
+                      style="
+                        display: flex;
+                        justify-content: space-between;
+                        margin-bottom: 4px;
+                        font-size: 12.5px;
+                      "
+                    >
+                      <span style="font-weight: 600">Cat</span>
+                      <span style="color: var(--text-secondary)"
+                        >18 produk · 61% aman</span
+                      >
+                    </div>
+                    <div
+                      style="
+                        height: 8px;
+                        background: #e2e8f0;
+                        border-radius: 10px;
+                        overflow: hidden;
+                      "
+                    >
+                      <div
+                        style="
+                          width: 61%;
+                          height: 100%;
+                          background: var(--amber-500);
+                          border-radius: 10px;
+                        "
+                      ></div>
+                    </div>
+                  </div>
+                  <div>
+                    <div
+                      style="
+                        display: flex;
+                        justify-content: space-between;
+                        margin-bottom: 4px;
+                        font-size: 12.5px;
+                      "
+                    >
+                      <span style="font-weight: 600">Pipa & Besi</span>
+                      <span style="color: var(--text-secondary)"
+                        >28 produk · 54% aman</span
+                      >
+                    </div>
+                    <div
+                      style="
+                        height: 8px;
+                        background: #e2e8f0;
+                        border-radius: 10px;
+                        overflow: hidden;
+                      "
+                    >
+                      <div
+                        style="
+                          width: 54%;
+                          height: 100%;
+                          background: var(--red-400);
+                          border-radius: 10px;
+                        "
+                      ></div>
+                    </div>
+                  </div>
+                  <div>
+                    <div
+                      style="
+                        display: flex;
+                        justify-content: space-between;
+                        margin-bottom: 4px;
+                        font-size: 12.5px;
+                      "
+                    >
+                      <span style="font-weight: 600">Sanitasi</span>
+                      <span style="color: var(--text-secondary)"
+                        >19 produk · 68% aman</span
+                      >
+                    </div>
+                    <div
+                      style="
+                        height: 8px;
+                        background: #e2e8f0;
+                        border-radius: 10px;
+                        overflow: hidden;
+                      "
+                    >
+                      <div
+                        style="
+                          width: 68%;
+                          height: 100%;
+                          background: var(--green-500);
+                          border-radius: 10px;
+                        "
+                      ></div>
+                    </div>
+                  </div>
+                  <div>
+                    <div
+                      style="
+                        display: flex;
+                        justify-content: space-between;
+                        margin-bottom: 4px;
+                        font-size: 12.5px;
+                      "
+                    >
+                      <span style="font-weight: 600">Plafon</span>
+                      <span style="color: var(--text-secondary)"
+                        >12 produk · 83% aman</span
+                      >
+                    </div>
+                    <div
+                      style="
+                        height: 8px;
+                        background: #e2e8f0;
+                        border-radius: 10px;
+                        overflow: hidden;
+                      "
+                    >
+                      <div
+                        style="
+                          width: 83%;
+                          height: 100%;
+                          background: var(--green-500);
+                          border-radius: 10px;
+                        "
+                      ></div>
+                    </div>
+                  </div>
+                  <div>
+                    <div
+                      style="
+                        display: flex;
+                        justify-content: space-between;
+                        margin-bottom: 4px;
+                        font-size: 12.5px;
+                      "
+                    >
+                      <span style="font-weight: 600">Alat Pertukangan</span>
+                      <span style="color: var(--text-secondary)"
+                        >15 produk · 93% aman</span
+                      >
+                    </div>
+                    <div
+                      style="
+                        height: 8px;
+                        background: #e2e8f0;
+                        border-radius: 10px;
+                        overflow: hidden;
+                      "
+                    >
+                      <div
+                        style="
+                          width: 93%;
+                          height: 100%;
+                          background: var(--blue-600);
+                          border-radius: 10px;
+                        "
+                      ></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- PEMBELIAN CHART -->
+            <div class="card">
+              <div class="card-header">
+                <div class="card-title">
+                  <i class="fa-solid fa-chart-line"></i> Nilai Pembelian Bulanan
+                </div>
+              </div>
+              <div class="card-body">
+                <div style="display: flex; gap: 14px; margin-bottom: 16px">
+                  <div
+                    style="
+                      flex: 1;
+                      background: var(--page-bg);
+                      border-radius: var(--radius-md);
+                      padding: 12px;
+                      text-align: center;
+                    "
+                  >
+                    <div
+                      style="
+                        font-size: 11px;
+                        color: var(--text-muted);
+                        font-weight: 600;
+                        margin-bottom: 4px;
+                      "
+                    >
+                      TOTAL BULAN INI
+                    </div>
+                    <div
+                      style="
+                        font-size: 20px;
+                        font-weight: 800;
+                        color: var(--green-600);
+                      "
+                    >
+                      Rp 28,4 Jt
+                    </div>
+                  </div>
+                  <div
+                    style="
+                      flex: 1;
+                      background: var(--page-bg);
+                      border-radius: var(--radius-md);
+                      padding: 12px;
+                      text-align: center;
+                    "
+                  >
+                    <div
+                      style="
+                        font-size: 11px;
+                        color: var(--text-muted);
+                        font-weight: 600;
+                        margin-bottom: 4px;
+                      "
+                    >
+                      JUMLAH PO
+                    </div>
+                    <div
+                      style="
+                        font-size: 20px;
+                        font-weight: 800;
+                        color: var(--blue-600);
+                      "
+                    >
+                      18
+                    </div>
+                  </div>
+                  <div
+                    style="
+                      flex: 1;
+                      background: var(--page-bg);
+                      border-radius: var(--radius-md);
+                      padding: 12px;
+                      text-align: center;
+                    "
+                  >
+                    <div
+                      style="
+                        font-size: 11px;
+                        color: var(--text-muted);
+                        font-weight: 600;
+                        margin-bottom: 4px;
+                      "
+                    >
+                      RAT. LEAD TIME
+                    </div>
+                    <div
+                      style="
+                        font-size: 20px;
+                        font-weight: 800;
+                        color: var(--amber-600);
+                      "
+                    >
+                      3.2hr
+                    </div>
+                  </div>
+                </div>
+                <div
+                  style="
+                    display: flex;
+                    align-items: flex-end;
+                    gap: 8px;
+                    height: 100px;
+                  "
+                >
+                  <div
+                    style="
+                      flex: 1;
+                      display: flex;
+                      flex-direction: column;
+                      align-items: center;
+                      gap: 4px;
+                    "
+                  >
+                    <div
+                      style="
+                        width: 100%;
+                        height: 55px;
+                        background: var(--blue-200);
+                        border-radius: 5px 5px 0 0;
+                      "
+                    ></div>
+                    <div style="font-size: 10px; color: var(--text-muted)">
+                      Agt
+                    </div>
+                  </div>
+                  <div
+                    style="
+                      flex: 1;
+                      display: flex;
+                      flex-direction: column;
+                      align-items: center;
+                      gap: 4px;
+                    "
+                  >
+                    <div
+                      style="
+                        width: 100%;
+                        height: 48px;
+                        background: var(--blue-200);
+                        border-radius: 5px 5px 0 0;
+                      "
+                    ></div>
+                    <div style="font-size: 10px; color: var(--text-muted)">
+                      Sep
+                    </div>
+                  </div>
+                  <div
+                    style="
+                      flex: 1;
+                      display: flex;
+                      flex-direction: column;
+                      align-items: center;
+                      gap: 4px;
+                    "
+                  >
+                    <div
+                      style="
+                        width: 100%;
+                        height: 65px;
+                        background: var(--blue-200);
+                        border-radius: 5px 5px 0 0;
+                      "
+                    ></div>
+                    <div style="font-size: 10px; color: var(--text-muted)">
+                      Okt
+                    </div>
+                  </div>
+                  <div
+                    style="
+                      flex: 1;
+                      display: flex;
+                      flex-direction: column;
+                      align-items: center;
+                      gap: 4px;
+                    "
+                  >
+                    <div
+                      style="
+                        width: 100%;
+                        height: 72px;
+                        background: var(--blue-300);
+                        border-radius: 5px 5px 0 0;
+                      "
+                    ></div>
+                    <div style="font-size: 10px; color: var(--text-muted)">
+                      Nov
+                    </div>
+                  </div>
+                  <div
+                    style="
+                      flex: 1;
+                      display: flex;
+                      flex-direction: column;
+                      align-items: center;
+                      gap: 4px;
+                    "
+                  >
+                    <div
+                      style="
+                        width: 100%;
+                        height: 60px;
+                        background: var(--blue-300);
+                        border-radius: 5px 5px 0 0;
+                      "
+                    ></div>
+                    <div style="font-size: 10px; color: var(--text-muted)">
+                      Des
+                    </div>
+                  </div>
+                  <div
+                    style="
+                      flex: 1;
+                      display: flex;
+                      flex-direction: column;
+                      align-items: center;
+                      gap: 4px;
+                    "
+                  >
+                    <div
+                      style="
+                        width: 100%;
+                        height: 80px;
+                        background: var(--blue-600);
+                        border-radius: 5px 5px 0 0;
+                      "
+                    ></div>
+                    <div
+                      style="
+                        font-size: 10px;
+                        color: var(--text-muted);
+                        font-weight: 700;
+                      "
+                    >
+                      Jan
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- SUPPLIER REPORT TABLE -->
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">
+                <i class="fa-solid fa-table"></i> Laporan Performa Supplier —
+                Januari 2024
+              </div>
+              <button class="btn btn-outline btn-sm">
+                <i class="fa-solid fa-print"></i> Print
+              </button>
+            </div>
+            <div class="table-wrapper">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Supplier</th>
+                    <th>Total PO</th>
+                    <th>On-Time</th>
+                    <th>Terlambat</th>
+                    <th>Avg. Lead Time</th>
+                    <th>Nilai Transaksi</th>
+                    <th>Rating</th>
+                    <th>Trend</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td style="font-weight: 700">CV Mitra Keramik</td>
+                    <td>8</td>
+                    <td style="color: var(--green-600); font-weight: 700">7</td>
+                    <td style="color: var(--red-600)">1</td>
+                    <td>2.5 hari</td>
+                    <td style="font-weight: 700">Rp 12,8 Jt</td>
+                    <td>⭐ 4.6</td>
+                    <td style="color: var(--green-600)">
+                      <i class="fa-solid fa-arrow-trend-up"></i> +0.2
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="font-weight: 700">PT Sanitasi Prima</td>
+                    <td>4</td>
+                    <td style="color: var(--green-600); font-weight: 700">3</td>
+                    <td style="color: var(--red-600)">1</td>
+                    <td>3.8 hari</td>
+                    <td style="font-weight: 700">Rp 6,4 Jt</td>
+                    <td>⭐ 4.2</td>
+                    <td style="color: var(--green-600)">
+                      <i class="fa-solid fa-arrow-trend-up"></i> +0.1
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="font-weight: 700">UD Warna Jaya</td>
+                    <td>3</td>
+                    <td style="color: var(--green-600); font-weight: 700">2</td>
+                    <td style="color: var(--amber-600)">1</td>
+                    <td>1.8 hari</td>
+                    <td style="font-weight: 700">Rp 3,9 Jt</td>
+                    <td>⭐ 3.9</td>
+                    <td style="color: var(--text-muted)">= 0</td>
+                  </tr>
+                  <tr>
+                    <td style="font-weight: 700">Toko Plastik Sentosa</td>
+                    <td>2</td>
+                    <td style="color: var(--amber-600); font-weight: 700">1</td>
+                    <td style="color: var(--red-600)">1</td>
+                    <td>3.5 hari</td>
+                    <td style="font-weight: 700">Rp 3,1 Jt</td>
+                    <td>⭐ 3.2</td>
+                    <td style="color: var(--red-600)">
+                      <i class="fa-solid fa-arrow-trend-down"></i> -0.3
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="font-weight: 700">CV Besi Mandiri</td>
+                    <td>1</td>
+                    <td style="color: var(--red-600); font-weight: 700">0</td>
+                    <td style="color: var(--red-600)">1</td>
+                    <td>5.0 hari</td>
+                    <td style="font-weight: 700">Rp 2,2 Jt</td>
+                    <td>⭐ 2.8</td>
+                    <td style="color: var(--red-600)">
+                      <i class="fa-solid fa-arrow-trend-down"></i> -0.5
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- /page-reports -->
+    </main>
+    <!-- /main -->
+
+    <!-- ═══════════ MODAL: WA ORDER ═══════════ -->
+    <div class="modal-overlay" id="waModal">
+      <div class="modal">
+        <div class="modal-header">
+          <div
+            class="modal-title"
+            style="display: flex; align-items: center; gap: 8px"
+          >
+            <div
+              class="wa-logo"
+              style="width: 26px; height: 26px; font-size: 13px"
+            >
+              <i class="fa-brands fa-whatsapp"></i>
+            </div>
+            Smart Reorder — Pesan via WhatsApp
+          </div>
+          <button class="modal-close" onclick="closeModal('waModal')">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="info-box mb-16">
+            <i class="fa-solid fa-circle-info"></i>
+            <span
+              >Pesan di bawah sudah dibuat otomatis oleh sistem. Anda bisa edit
+              sebelum mengirim.</span
+            >
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Supplier</label>
+            <div style="display: flex; align-items: center; gap: 8px">
+              <input
+                type="text"
+                class="form-control"
+                id="waSupplierName"
+                readonly
+                style="flex: 1; background: var(--page-bg)"
+              />
+              <input
+                type="text"
+                class="form-control"
+                id="waPhone"
+                readonly
+                style="width: 160px; background: var(--page-bg)"
+              />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Preview Pesan WhatsApp</label>
+            <div
+              class="wa-preview"
+              id="waPreviewBox"
+              contenteditable="true"
+            ></div>
+          </div>
+
+          <div class="form-group" style="margin-bottom: 0">
+            <label class="form-label">Jumlah Pesanan</label>
+            <div style="display: flex; gap: 8px; align-items: center">
+              <input
+                type="number"
+                class="form-control"
+                id="waQty"
+                style="width: 100px"
+                oninput="updateWAMessage()"
+              />
+              <span
+                id="waUnit"
+                style="
+                  font-size: 13px;
+                  color: var(--text-secondary);
+                  font-weight: 600;
+                "
+              ></span>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-outline" onclick="closeModal('waModal')">
+            Batal
+          </button>
+          <button class="btn btn-primary" onclick="saveAsPO()">
+            <i class="fa-solid fa-file-circle-plus"></i> Simpan sebagai PO
+          </button>
+          <button class="btn btn-wa" onclick="openWA()">
+            <i class="fa-brands fa-whatsapp"></i> Buka WhatsApp
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════ MODAL: TAMBAH PRODUK ═══════════ -->
+    <div class="modal-overlay" id="addProductModal">
+      <div class="modal">
+        <div class="modal-header">
+          <div class="modal-title">Tambah Produk Baru</div>
+          <button class="modal-close" onclick="closeModal('addProductModal')">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Kode Produk</label>
+              <input type="text" class="form-control" placeholder="PRD-0001" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Kategori</label>
+              <select class="form-control">
+                <option>Keramik</option>
+                <option>Cat</option>
+                <option>Pipa</option>
+                <option>Besi</option>
+                <option>Plafon</option>
+                <option>Keran</option>
+                <option>Closet</option>
+                <option>Alat Pertukangan</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Nama Produk</label>
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Nama lengkap produk"
+            />
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Stok Awal</label>
+              <input type="number" class="form-control" placeholder="0" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Stok Minimum</label>
+              <input type="number" class="form-control" placeholder="10" />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Satuan</label>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Dus, Batang, Unit..."
+              />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Supplier</label>
+              <select class="form-control">
+                <option>CV Mitra Keramik</option>
+                <option>UD Warna Jaya</option>
+                <option>PT Sanitasi Prima</option>
+                <option>Toko Plastik Sentosa</option>
+                <option>CV Besi Mandiri</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Catatan</label>
+            <textarea
+              class="form-control"
+              placeholder="Catatan tambahan (opsional)"
+            ></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button
+            class="btn btn-outline"
+            onclick="closeModal('addProductModal')"
+          >
+            Batal
+          </button>
+          <button
+            class="btn btn-primary"
+            onclick="
+              closeModal('addProductModal');
+              showToast('Produk berhasil ditambahkan!');
+            "
+          >
+            <i class="fa-solid fa-check"></i> Simpan Produk
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════ MODAL: TAMBAH SUPPLIER ═══════════ -->
+    <div class="modal-overlay" id="addSupplierModal">
+      <div class="modal">
+        <div class="modal-header">
+          <div class="modal-title">Tambah Supplier Baru</div>
+          <button class="modal-close" onclick="closeModal('addSupplierModal')">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Nama Supplier / Toko</label>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="CV / UD / PT ..."
+              />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Nama PIC / Kontak</label>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Nama yang bisa dihubungi"
+              />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Nomor WhatsApp</label>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="+62 8xx-xxxx-xxxx"
+              />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Kota / Daerah</label>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Bandung, Jakarta, ..."
+              />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Produk yang Disuplai</label>
+            <div
+              style="
+                display: flex;
+                flex-wrap: wrap;
+                gap: 6px;
+                padding: 10px;
+                border: 1px solid var(--card-border);
+                border-radius: var(--radius-sm);
+              "
+            >
+              <label
+                style="
+                  display: flex;
+                  align-items: center;
+                  gap: 5px;
+                  font-size: 13px;
+                  cursor: pointer;
+                "
+                ><input type="checkbox" /> Keramik</label
+              >
+              <label
+                style="
+                  display: flex;
+                  align-items: center;
+                  gap: 5px;
+                  font-size: 13px;
+                  cursor: pointer;
+                "
+                ><input type="checkbox" /> Cat</label
+              >
+              <label
+                style="
+                  display: flex;
+                  align-items: center;
+                  gap: 5px;
+                  font-size: 13px;
+                  cursor: pointer;
+                "
+                ><input type="checkbox" /> Pipa</label
+              >
+              <label
+                style="
+                  display: flex;
+                  align-items: center;
+                  gap: 5px;
+                  font-size: 13px;
+                  cursor: pointer;
+                "
+                ><input type="checkbox" /> Besi</label
+              >
+              <label
+                style="
+                  display: flex;
+                  align-items: center;
+                  gap: 5px;
+                  font-size: 13px;
+                  cursor: pointer;
+                "
+                ><input type="checkbox" /> Plafon</label
+              >
+              <label
+                style="
+                  display: flex;
+                  align-items: center;
+                  gap: 5px;
+                  font-size: 13px;
+                  cursor: pointer;
+                "
+                ><input type="checkbox" /> Keran</label
+              >
+              <label
+                style="
+                  display: flex;
+                  align-items: center;
+                  gap: 5px;
+                  font-size: 13px;
+                  cursor: pointer;
+                "
+                ><input type="checkbox" /> Closet</label
+              >
+              <label
+                style="
+                  display: flex;
+                  align-items: center;
+                  gap: 5px;
+                  font-size: 13px;
+                  cursor: pointer;
+                "
+                ><input type="checkbox" /> Alat Pertukangan</label
+              >
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Estimasi Lead Time</label>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Misal: 2-3 hari"
+              />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Rating Awal (1-5)</label>
+              <input
+                type="number"
+                class="form-control"
+                min="1"
+                max="5"
+                placeholder="3"
+              />
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button
+            class="btn btn-outline"
+            onclick="closeModal('addSupplierModal')"
+          >
+            Batal
+          </button>
+          <button
+            class="btn btn-primary"
+            onclick="
+              closeModal('addSupplierModal');
+              showToast('Supplier berhasil ditambahkan!');
+            "
+          >
+            <i class="fa-solid fa-check"></i> Simpan Supplier
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- TOAST -->
+    <div
+      id="toast"
+      style="
+        position: fixed;
+        bottom: 24px;
+        right: 24px;
+        background: var(--text-primary);
+        color: #fff;
+        padding: 12px 18px;
+        border-radius: var(--radius-md);
+        font-size: 13px;
+        font-weight: 600;
+        box-shadow: var(--shadow-lg);
+        transform: translateY(80px);
+        opacity: 0;
+        transition: all 0.3s ease;
+        z-index: 999;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      "
+    >
+      <i class="fa-solid fa-circle-check" style="color: #22c55e"></i>
+      <span id="toastMsg">Berhasil!</span>
+    </div>
+
+    <script>
+      // ── DATA ──────────────────────────────────────────────
+      const INVENTORY = [
+        {
+          kode: "KRM-001",
+          nama: "Keramik Putih 40x40",
+          kategori: "Keramik",
+          stok: 45,
+          min: 20,
+          satuan: "Dus",
+          supplier: "CV Mitra Keramik",
+          phone: "+62 812-3456-7890",
+        },
+        {
+          kode: "KRM-002",
+          nama: "Keramik Granit 60x60 Abu-abu",
+          kategori: "Keramik",
+          stok: 5,
+          min: 20,
+          satuan: "Dus",
+          supplier: "CV Mitra Keramik",
+          phone: "+62 812-3456-7890",
+        },
+        {
+          kode: "KRM-003",
+          nama: "Keramik Motif Marmer",
+          kategori: "Keramik",
+          stok: 18,
+          min: 15,
+          satuan: "Dus",
+          supplier: "CV Mitra Keramik",
+          phone: "+62 812-3456-7890",
+        },
+        {
+          kode: "KRM-004",
+          nama: "Keramik Antislip 30x30",
+          kategori: "Keramik",
+          stok: 62,
+          min: 25,
+          satuan: "Dus",
+          supplier: "CV Mitra Keramik",
+          phone: "+62 812-3456-7890",
+        },
+        {
+          kode: "KRM-005",
+          nama: "Keramik Lantai 60x60 Hitam",
+          kategori: "Keramik",
+          stok: 12,
+          min: 15,
+          satuan: "Dus",
+          supplier: "CV Mitra Keramik",
+          phone: "+62 812-3456-7890",
+        },
+        {
+          kode: "CAT-001",
+          nama: "Cat Tembok Putih 25kg",
+          kategori: "Cat",
+          stok: 2,
+          min: 15,
+          satuan: "Kaleng",
+          supplier: "UD Warna Jaya",
+          phone: "+62 821-9988-7766",
+        },
+        {
+          kode: "CAT-002",
+          nama: "Cat Eksterior Abu-abu 5kg",
+          kategori: "Cat",
+          stok: 8,
+          min: 10,
+          satuan: "Kaleng",
+          supplier: "UD Warna Jaya",
+          phone: "+62 821-9988-7766",
+        },
+        {
+          kode: "CAT-003",
+          nama: "Cat Kayu Politur 1L",
+          kategori: "Cat",
+          stok: 25,
+          min: 12,
+          satuan: "Kaleng",
+          supplier: "UD Warna Jaya",
+          phone: "+62 821-9988-7766",
+        },
+        {
+          kode: "PPA-001",
+          nama: 'Pipa PVC 4"',
+          kategori: "Pipa",
+          stok: 12,
+          min: 30,
+          satuan: "Batang",
+          supplier: "Toko Plastik Sentosa",
+          phone: "+62 856-1122-3344",
+        },
+        {
+          kode: "PPA-002",
+          nama: 'Pipa PVC 3"',
+          kategori: "Pipa",
+          stok: 45,
+          min: 30,
+          satuan: "Batang",
+          supplier: "Toko Plastik Sentosa",
+          phone: "+62 856-1122-3344",
+        },
+        {
+          kode: "PPA-003",
+          nama: 'Pipa PPR 1/2"',
+          kategori: "Pipa",
+          stok: 80,
+          min: 40,
+          satuan: "Batang",
+          supplier: "Toko Plastik Sentosa",
+          phone: "+62 856-1122-3344",
+        },
+        {
+          kode: "BSI-001",
+          nama: "Besi Hollow 4x4",
+          kategori: "Besi",
+          stok: 8,
+          min: 25,
+          satuan: "Batang",
+          supplier: "CV Besi Mandiri",
+          phone: "+62 877-5566-7788",
+        },
+        {
+          kode: "BSI-002",
+          nama: "Besi Siku 4x4cm",
+          kategori: "Besi",
+          stok: 30,
+          min: 20,
+          satuan: "Batang",
+          supplier: "CV Besi Mandiri",
+          phone: "+62 877-5566-7788",
+        },
+        {
+          kode: "BSI-003",
+          nama: "Besi Beton D10",
+          kategori: "Besi",
+          stok: 55,
+          min: 30,
+          satuan: "Batang",
+          supplier: "CV Besi Mandiri",
+          phone: "+62 877-5566-7788",
+        },
+        {
+          kode: "PLF-001",
+          nama: "Plafon PVC 4m Putih",
+          kategori: "Plafon",
+          stok: 60,
+          min: 20,
+          satuan: "Lembar",
+          supplier: "Toko Material Jaya",
+          phone: "+62 898-7766-5544",
+        },
+        {
+          kode: "KRN-001",
+          nama: 'Keran Kuning 1/2"',
+          kategori: "Keran",
+          stok: 35,
+          min: 15,
+          satuan: "Unit",
+          supplier: "PT Sanitasi Prima",
+          phone: "+62 811-2233-4455",
+        },
+        {
+          kode: "CLS-001",
+          nama: "Closet Duduk Standard",
+          kategori: "Closet",
+          stok: 1,
+          min: 5,
+          satuan: "Unit",
+          supplier: "PT Sanitasi Prima",
+          phone: "+62 811-2233-4455",
+        },
+        {
+          kode: "CLS-002",
+          nama: "Closet Jongkok Polos",
+          kategori: "Closet",
+          stok: 7,
+          min: 5,
+          satuan: "Unit",
+          supplier: "PT Sanitasi Prima",
+          phone: "+62 811-2233-4455",
+        },
+        {
+          kode: "APT-001",
+          nama: "Palu Besi 500gr",
+          kategori: "Alat Pertukangan",
+          stok: 20,
+          min: 10,
+          satuan: "Pcs",
+          supplier: "Toko Alat Prima",
+          phone: "+62 812-9900-1122",
+        },
+        {
+          kode: "APT-002",
+          nama: "Meteran 5m Stanley",
+          kategori: "Alat Pertukangan",
+          stok: 15,
+          min: 8,
+          satuan: "Pcs",
+          supplier: "Toko Alat Prima",
+          phone: "+62 812-9900-1122",
+        },
+      ];
+
+      const SUPPLIERS = [
+        {
+          nama: "CV Mitra Keramik",
+          pic: "Pak Hendra",
+          kota: "Bandung",
+          wa: "+62 812-3456-7890",
+          produk: ["Keramik"],
+          lead: "2-3 hari",
+          rating: 4.6,
+          po: 8,
+          warna: "#1D4ED8",
+          initial: "MK",
+        },
+        {
+          nama: "UD Warna Jaya",
+          pic: "Bu Rina",
+          kota: "Cikampek",
+          wa: "+62 821-9988-7766",
+          produk: ["Cat"],
+          lead: "1-2 hari",
+          rating: 3.9,
+          po: 3,
+          warna: "#059669",
+          initial: "WJ",
+        },
+        {
+          nama: "PT Sanitasi Prima",
+          pic: "Pak Budi",
+          kota: "Jakarta",
+          wa: "+62 811-2233-4455",
+          produk: ["Closet", "Keran"],
+          lead: "3-5 hari",
+          rating: 4.2,
+          po: 4,
+          warna: "#7C3AED",
+          initial: "SP",
+        },
+        {
+          nama: "Toko Plastik Sentosa",
+          pic: "Pak Agus",
+          kota: "Karawang",
+          wa: "+62 856-1122-3344",
+          produk: ["Pipa"],
+          lead: "2-4 hari",
+          rating: 3.2,
+          po: 2,
+          warna: "#D97706",
+          initial: "PS",
+        },
+        {
+          nama: "CV Besi Mandiri",
+          pic: "Pak Joko",
+          kota: "Bekasi",
+          wa: "+62 877-5566-7788",
+          produk: ["Besi"],
+          lead: "3-5 hari",
+          rating: 2.8,
+          po: 1,
+          warna: "#DC2626",
+          initial: "BM",
+        },
+        {
+          nama: "Toko Material Jaya",
+          pic: "Pak Samsul",
+          kota: "Karawang",
+          wa: "+62 898-7766-5544",
+          produk: ["Plafon"],
+          lead: "2-3 hari",
+          rating: 4.0,
+          po: 3,
+          warna: "#0891B2",
+          initial: "MJ",
+        },
+        {
+          nama: "Toko Alat Prima",
+          pic: "Bu Sari",
+          kota: "Purwakarta",
+          wa: "+62 812-9900-1122",
+          produk: ["Alat Pertukangan"],
+          lead: "1-2 hari",
+          rating: 4.4,
+          po: 5,
+          warna: "#9D174D",
+          initial: "AP",
+        },
+      ];
+
+      // ── NAVIGATION ──────────────────────────────────────
+      const pagesMeta = {
+        dashboard: { title: "Dashboard", sub: "Selamat datang, Pak Darno" },
+        inventory: { title: "Inventory Monitoring", sub: "Kelola stok produk" },
+        supplier: {
+          title: "Supplier Management",
+          sub: "Data dan performa supplier",
+        },
+        procurement: { title: "Procurement", sub: "Pemantauan pemesanan" },
+        reports: { title: "Reports & Analytics", sub: "Laporan bisnis" },
+      };
+
+      document.querySelectorAll(".nav-item").forEach((el) => {
+        el.addEventListener("click", () => navigate(el.dataset.page));
+      });
+
+      function navigate(pageId) {
+        document
+          .querySelectorAll(".page")
+          .forEach((p) => p.classList.remove("active"));
+        document
+          .querySelectorAll(".nav-item")
+          .forEach((n) => n.classList.remove("active"));
+        const page = document.getElementById("page-" + pageId);
+        if (page) page.classList.add("active");
+        const nav = document.querySelector(`.nav-item[data-page="${pageId}"]`);
+        if (nav) nav.classList.add("active");
+        const meta = pagesMeta[pageId];
+        if (meta) {
+          document.getElementById("topbarTitle").textContent = meta.title;
+          document.getElementById("topbarSub").textContent = meta.sub;
+        }
+        if (pageId === "inventory") renderInventory(INVENTORY);
+        if (pageId === "supplier") renderSuppliers();
+        window.scrollTo(0, 0);
+      }
+
+      // ── DATE ──────────────────────────────────────────────
+      const d = new Date();
+      const opts = {
+        weekday: "short",
+        day: "numeric",
+        month: "short",
+        year: "numeric",
+      };
+      document.getElementById("dateStr").textContent = d.toLocaleDateString(
+        "id-ID",
+        opts,
+      );
+
+      // ── INVENTORY ─────────────────────────────────────────
+      function getStatus(stok, min) {
+        const ratio = stok / min;
+        if (ratio <= 0.25) return "Kritis";
+        if (ratio <= 0.6) return "Menipis";
+        return "Aman";
+      }
+
+      function renderInventory(data) {
+        const tbody = document.getElementById("invTbody");
+        if (!tbody) return;
+        tbody.innerHTML = data
+          .map((p) => {
+            const status = getStatus(p.stok, p.min);
+            const ratio = Math.min(p.stok / p.min, 1);
+            const pct = Math.round(ratio * 100);
+            const barColor =
+              status === "Kritis"
+                ? "var(--red-500)"
+                : status === "Menipis"
+                  ? "var(--amber-500)"
+                  : "var(--green-500)";
+            const badgeCls =
+              status === "Kritis"
+                ? "badge-kritis"
+                : status === "Menipis"
+                  ? "badge-menipis"
+                  : "badge-aman";
+            const rowCls =
+              status === "Kritis"
+                ? "highlight-kritis"
+                : status === "Menipis"
+                  ? "highlight-menipis"
+                  : "";
+            return `<tr class="${rowCls}">
+      <td><span class="td-code">${p.kode}</span></td>
+      <td style="font-weight:600;max-width:180px;">${p.nama}</td>
+      <td><span class="tag">${p.kategori}</span></td>
+      <td style="font-weight:700;color:${status === "Kritis" ? "var(--red-600)" : status === "Menipis" ? "var(--amber-600)" : "var(--green-600)"};">${p.stok} ${p.satuan}</td>
+      <td style="color:var(--text-secondary);">${p.min} ${p.satuan}</td>
+      <td>
+        <div class="stock-bar-wrap">
+          <div class="stock-bar"><div class="stock-fill" style="width:${pct}%;background:${barColor};"></div></div>
+          <span class="stock-text">${pct}%</span>
+        </div>
+      </td>
+      <td><span class="badge ${badgeCls}">${status}</span></td>
+      <td style="font-size:12.5px;color:var(--text-secondary);">${p.supplier}</td>
+      <td>
+        <div class="action-group">
+          <button class="btn btn-outline btn-xs" onclick="showToast('Detail ${p.nama}')"><i class="fa-solid fa-eye"></i></button>
+          <button class="btn btn-wa btn-xs" onclick="openWAModal('${p.nama}','${p.supplier}','${p.phone}',${p.min},'${p.satuan}')"><i class="fa-brands fa-whatsapp"></i> Pesan</button>
+        </div>
+      </td>
+    </tr>`;
+          })
+          .join("");
+      }
+
+      function filterInventory() {
+        const q = document.getElementById("invSearch").value.toLowerCase();
+        const kat = document.getElementById("invKategori").value;
+        const sts = document.getElementById("invStatus").value;
+        const filtered = INVENTORY.filter((p) => {
+          const matchQ =
+            !q ||
+            p.nama.toLowerCase().includes(q) ||
+            p.kode.toLowerCase().includes(q);
+          const matchK = !kat || p.kategori === kat;
+          const matchS = !sts || getStatus(p.stok, p.min) === sts;
+          return matchQ && matchK && matchS;
+        });
+        renderInventory(filtered);
+      }
+
+      function resetFilter() {
+        document.getElementById("invSearch").value = "";
+        document.getElementById("invKategori").value = "";
+        document.getElementById("invStatus").value = "";
+        renderInventory(INVENTORY);
+      }
+
+      // ── SUPPLIER ──────────────────────────────────────────
+      function renderSuppliers() {
+        const grid = document.getElementById("supplierGrid");
+        if (!grid) return;
+        grid.innerHTML = SUPPLIERS.map((s) => {
+          const stars = [1, 2, 3, 4, 5]
+            .map(
+              (i) =>
+                `<span class="star ${i <= Math.round(s.rating) ? "filled" : "empty"}">★</span>`,
+            )
+            .join("");
+          const tags = s.produk
+            .map((t) => `<span class="tag">${t}</span>`)
+            .join("");
+          return `<div class="supplier-card">
+      <div class="supplier-head">
+        <div class="supplier-avatar" style="background:${s.warna};">${s.initial}</div>
+        <div>
+          <div class="supplier-name">${s.nama}</div>
+          <div class="supplier-type">${s.pic} · ${s.kota}</div>
+          <div class="supplier-rating">${stars}<span class="rating-text">${s.rating}</span></div>
+        </div>
+      </div>
+      <div class="supplier-tags">${tags}</div>
+      <div class="supplier-meta">
+        <div class="meta-item"><div class="meta-val">${s.po}</div><div class="meta-lbl">Total PO</div></div>
+        <div class="meta-item"><div class="meta-val">${s.lead}</div><div class="meta-lbl">Lead Time</div></div>
+        <div class="meta-item"><div class="meta-val" style="color:${s.rating >= 4 ? "var(--green-600)" : s.rating >= 3 ? "var(--amber-600)" : "var(--red-600)"}">${s.rating >= 4 ? "Baik" : s.rating >= 3 ? "Cukup" : "Buruk"}</div><div class="meta-lbl">Performa</div></div>
+      </div>
+      <div class="supplier-footer">
+        <div class="supplier-phone"><i class="fa-brands fa-whatsapp"></i>${s.wa}</div>
+        <button class="btn btn-wa btn-sm" onclick="openWAModal('${s.produk[0]}','${s.nama}','${s.wa}',10,'unit')"><i class="fa-brands fa-whatsapp"></i> Hubungi</button>
+      </div>
+    </div>`;
+        }).join("");
+      }
+
+      // ── TABS ──────────────────────────────────────────────
+      function switchTab(tabId, btn) {
+        // Hapus class active dari semua tab-content di halaman supplier
+        document.querySelectorAll('#page-supplier .tab-content').forEach(tc => tc.classList.remove('active'));
+        // Hapus class active dari semua tombol dalam grup tab yang sama
+        const tabGroup = btn.closest('.tab-group');
+        if (tabGroup) {
+            tabGroup.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        }
+        // Aktifkan tab-content yang dipilih
+        const target = document.getElementById(tabId);
+        if (target) target.classList.add('active');
+        // Aktifkan tombol yang diklik
+        btn.classList.add('active');
+        }
+
+      // ── WA MODAL ──────────────────────────────────────────
+      let waCurrentPhone = "";
+      let waCurrentProduct = "";
+      let waCurrentSupplier = "";
+      let waCurrentUnit = "";
+
+      function openWAModal(produk, supplier, phone, qty, satuan) {
+        waCurrentPhone = phone.replace(/\D/g, "");
+        waCurrentProduct = produk;
+        waCurrentSupplier = supplier;
+        waCurrentUnit = satuan;
+        document.getElementById("waSupplierName").value = supplier;
+        document.getElementById("waPhone").value = phone;
+        document.getElementById("waQty").value = qty;
+        document.getElementById("waUnit").textContent = satuan;
+        updateWAMessage();
+        document.getElementById("waModal").classList.add("open");
+      }
+
+      function updateWAMessage() {
+        const qty = document.getElementById("waQty").value || "—";
+        const unit = waCurrentUnit;
+        const msg = `Halo Pak/Bu,
+
+Stok *${waCurrentProduct}* di toko kami sudah menipis.
+
+Mohon informasi mengenai:
+• Ketersediaan barang
+• Harga terbaru
+• Estimasi waktu pengiriman
+
+Jumlah kebutuhan: *${qty} ${unit}*
+
+Terima kasih.
+_Toko Keramik Pandan Jati_`;
+        document.getElementById("waPreviewBox").textContent = msg;
+      }
+
+      function openWA() {
+        const msg = encodeURIComponent(
+          document.getElementById("waPreviewBox").textContent,
+        );
+        const phone = waCurrentPhone;
+        window.open(`https://wa.me/${phone}?text=${msg}`, "_blank");
+        closeModal("waModal");
+      }
+
+      function saveAsPO() {
+        closeModal("waModal");
+        showToast("PO berhasil disimpan!");
+      }
+
+      // ── MODALS ────────────────────────────────────────────
+      function closeModal(id) {
+        document.getElementById(id).classList.remove("open");
+      }
+
+      function openAddProduct() {
+        document.getElementById("addProductModal").classList.add("open");
+      }
+
+      function openAddSupplier() {
+        document.getElementById("addSupplierModal").classList.add("open");
+      }
+
+      function openAddPO() {
+        showToast("Fitur buat PO manual akan segera hadir!");
+      }
+
+      document.querySelectorAll(".modal-overlay").forEach((overlay) => {
+        overlay.addEventListener("click", (e) => {
+          if (e.target === overlay) overlay.classList.remove("open");
+        });
+      });
+
+      // ── TOAST ─────────────────────────────────────────────
+      let toastTimer;
+      function showToast(msg) {
+        const t = document.getElementById("toast");
+        document.getElementById("toastMsg").textContent = msg;
+        t.style.transform = "translateY(0)";
+        t.style.opacity = "1";
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => {
+          t.style.transform = "translateY(80px)";
+          t.style.opacity = "0";
+        }, 3000);
+      }
+
+      // ── MISC ──────────────────────────────────────────────
+      function showAlerts() {
+        navigate("inventory");
+        setTimeout(() => {
+          document.getElementById("invStatus").value = "Kritis";
+          filterInventory();
+        }, 100);
+        showToast("Menampilkan produk kritis...");
+      }
+
+      function updatePOStatus(poId, status) {
+        showToast(`${poId} diupdate ke "${status}"`);
+      }
+
+      function toggleAllCheck() {
+        const checked = document.getElementById("checkAll").checked;
+        document
+          .querySelectorAll(".po-check")
+          .forEach((c) => (c.checked = checked));
+      }
+
+      function createBatchPO() {
+        const checked = document.querySelectorAll(".po-check:checked").length;
+        if (!checked) {
+          showToast("Pilih setidaknya 1 item!");
+          return;
+        }
+        showToast(`Batch PO untuk ${checked} item berhasil dibuat!`);
+      }
+
+      function showReportDetail(type) {
+        const titles = {
+          stok: "Laporan Stok",
+          pembelian: "Laporan Pembelian",
+          supplier: "Laporan Supplier",
+        };
+        showToast(`Membuka ${titles[type]}...`);
+      }
+
+      // ── INIT ──────────────────────────────────────────────
+      renderInventory(INVENTORY);
+      renderSuppliers();
+
+      // Mobile menu
+      const menuBtn = document.getElementById("menuBtn");
+      if (window.innerWidth < 900) {
+        menuBtn.style.display = "flex";
+        menuBtn.onclick = () =>
+          document.getElementById("sidebar").classList.toggle("open");
+      }
+      window.addEventListener("resize", () => {
+        menuBtn.style.display = window.innerWidth < 900 ? "flex" : "none";
+        if (window.innerWidth >= 900)
+          document.getElementById("sidebar").classList.remove("open");
+      });
+      function logout() {
+        // Hapus session
+        localStorage.removeItem("isLoggedIn");
+        localStorage.removeItem("currentUser");
+        // Arahkan ke halaman login
+        window.location.href = "login.html";
+      }
+    </script>
+  </body>
+</html>
